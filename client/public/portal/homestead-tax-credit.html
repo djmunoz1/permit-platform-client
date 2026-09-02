@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homestead Tax Credit Application | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
+  <script src="/portal/app.js"></script>
+  <style>
+    :root {
+      --md-navy: #1b2a4a; --md-navy-dark: #0f1e36;
+      --md-blue: #2378C3; --md-blue-dark: #1a5d9a;
+      --md-blue-light: #d9e8f6; --md-blue-lighter: #eff6fb;
+      --md-red: #BE0000; --md-gold: #F0B429; --md-gold-light: #fef9e7;
+      --md-green: #2e7d32; --md-green-light: #e8f5e9;
+      --gray-5: #f8f8f8; --gray-10: #f0f0f0; --gray-20: #e6e6e6;
+      --gray-30: #c9c9c9; --gray-50: #757575; --gray-70: #454545;
+      --gray-90: #1b1b1b; --white: #ffffff;
+      --font-sans: 'Source Sans 3', sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --max-width: 860px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--gray-5); color: var(--gray-90); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+    a { color: var(--md-blue); }
+
+    /* ── Header ── */
+    .site-header { background: var(--white); border-bottom: 1px solid var(--gray-20); padding: 0 1.5rem; height: 68px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+    .site-logo { display: flex; align-items: center; text-decoration: none; }
+    .header-user { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--gray-70); }
+    .header-user strong { color: var(--gray-90); }
+    .btn-ghost { background: none; border: 1px solid var(--gray-30); border-radius: 4px; padding: 0.375rem 0.75rem; font: 600 0.8125rem var(--font-sans); color: var(--gray-70); cursor: pointer; transition: border-color 0.15s; }
+    .btn-ghost:hover { border-color: var(--gray-50); color: var(--gray-90); }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb { background: var(--white); border-bottom: 1px solid var(--gray-10); padding: 0.75rem 1.5rem; }
+    .breadcrumb-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--gray-70); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--md-blue); text-decoration: underline; }
+    .breadcrumb-sep { color: var(--gray-30); }
+    .breadcrumb-current { color: var(--gray-70); font-weight: 600; }
+
+    /* ── Main layout ── */
+    main { flex: 1; padding: 2rem 1.5rem 4rem; }
+    .form-layout { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 220px 1fr; gap: 2rem; align-items: start; }
+
+    /* ── Stepper sidebar ── */
+    .stepper { position: sticky; top: 88px; background: var(--white); border: 1px solid var(--gray-20); border-radius: 8px; padding: 1.25rem 1rem; }
+    .stepper-title { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-50); margin-bottom: 1rem; padding: 0 0.25rem; }
+    .step-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.625rem 0.5rem; border-radius: 6px; cursor: pointer; transition: background 0.15s; margin-bottom: 0.125rem; }
+    .step-item.active { background: var(--md-blue-lighter); }
+    .step-circle {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6875rem; font-weight: 700;
+      border: 2px solid var(--gray-30); color: var(--gray-50); background: var(--white);
+    }
+    .step-item.active .step-circle { border-color: var(--md-blue); color: var(--md-blue); background: var(--md-blue-lighter); }
+    .step-item.complete .step-circle { border-color: var(--md-green); background: var(--md-green); color: var(--white); }
+    .step-label { font-size: 0.875rem; font-weight: 600; color: var(--gray-70); line-height: 1.3; padding-top: 2px; }
+    .step-item.active .step-label { color: var(--md-blue-dark); }
+    .step-item.complete .step-label { color: var(--md-green); }
+
+    /* ── Form card ── */
+    .form-card { background: var(--white); border: 1px solid var(--gray-20); border-radius: 8px; overflow: hidden; }
+    .form-card-header { padding: 1.75rem 2rem 1.25rem; border-bottom: 1px solid var(--gray-10); }
+    .step-eyebrow { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--md-blue); margin-bottom: 0.5rem; }
+    .form-card-header h1 { font-family: var(--font-serif); font-size: 1.375rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.375rem; }
+    .form-card-header p { font-size: 0.9375rem; color: var(--gray-70); line-height: 1.5; }
+    .form-card-body { padding: 1.75rem 2rem; }
+    .form-card-footer { padding: 1.25rem 2rem; border-top: 1px solid var(--gray-10); display: flex; justify-content: space-between; align-items: center; background: var(--gray-5); }
+
+    /* ── Fields ── */
+    .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1.5rem; }
+    .field { display: flex; flex-direction: column; gap: 0.375rem; }
+    .field.full  { grid-column: 1 / -1; }
+    .field.half  { grid-column: span 1; }
+    .field.quarter { grid-column: span 1; }
+
+    label.field-label { font-size: 0.9375rem; font-weight: 600; color: var(--gray-90); }
+    .required-star { color: var(--md-red); margin-left: 2px; }
+    .field-hint { font-size: 0.8125rem; color: var(--gray-50); line-height: 1.4; }
+
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="date"], input[type="password"], select {
+      border: 2px solid var(--gray-30); border-radius: 4px;
+      padding: 0.6875rem 0.875rem; font: 1rem var(--font-sans);
+      color: var(--gray-90); outline: none; width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      background: var(--white);
+    }
+    input:focus, select:focus { border-color: var(--md-blue); box-shadow: 0 0 0 3px rgba(35,120,195,0.2); }
+    input.invalid, select.invalid { border-color: var(--md-red); }
+    .field-error { font-size: 0.8125rem; color: var(--md-red); display: none; }
+    .field-error.show { display: block; }
+
+    /* Radio group */
+    .radio-group { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.125rem; }
+    .radio-option { display: flex; align-items: center; gap: 0.625rem; cursor: pointer; }
+    .radio-option input[type="radio"] { width: 18px; height: 18px; accent-color: var(--md-blue); cursor: pointer; flex-shrink: 0; }
+    .radio-option span { font-size: 0.9375rem; color: var(--gray-90); }
+
+    /* Checkbox */
+    .checkbox-option { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+    .checkbox-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--md-blue); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+    .checkbox-option span { font-size: 0.9375rem; color: var(--gray-90); line-height: 1.5; }
+
+    /* ── Ineligible alert ── */
+    .alert { border-radius: 6px; padding: 1rem 1.125rem; display: flex; gap: 0.75rem; align-items: flex-start; }
+    .alert-error { background: #fde8e8; border: 1px solid #f0a8a8; }
+    .alert svg { flex-shrink: 0; width: 20px; height: 20px; color: var(--md-red); margin-top: 1px; }
+    .alert-body strong { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.25rem; }
+    .alert-body p { font-size: 0.875rem; color: var(--gray-70); line-height: 1.5; }
+
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 4px; font: 700 1rem var(--font-sans); cursor: pointer; transition: background 0.15s, border-color 0.15s; border: 2px solid transparent; text-decoration: none; }
+    .btn-primary { background: var(--md-navy); color: var(--white); border-color: var(--md-navy); }
+    .btn-primary:hover { background: var(--md-navy-dark); border-color: var(--md-navy-dark); color: var(--white); }
+    .btn-outline { background: transparent; color: var(--md-navy); border-color: var(--md-navy); }
+    .btn-outline:hover { background: var(--gray-10); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* ── Review step ── */
+    .review-section { margin-bottom: 1.75rem; }
+    .review-section:last-child { margin-bottom: 0; }
+    .review-section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray-50); margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; }
+    .review-edit-link { font-size: 0.8125rem; font-weight: 600; color: var(--md-blue); text-transform: none; letter-spacing: 0; cursor: pointer; text-decoration: none; }
+    .review-edit-link:hover { text-decoration: underline; }
+    .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1.5rem; }
+    .review-field { display: flex; flex-direction: column; gap: 0.125rem; }
+    .review-label { font-size: 0.8125rem; color: var(--gray-50); }
+    .review-value { font-size: 0.9375rem; font-weight: 600; color: var(--gray-90); }
+
+    /* ── Success screen ── */
+    .success-screen { display: none; }
+    .success-screen.show { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 4rem 2rem; max-width: 560px; margin: 0 auto; }
+    .success-icon { width: 72px; height: 72px; background: var(--md-green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+    .success-icon svg { width: 36px; height: 36px; color: var(--md-green); }
+    .success-screen h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.75rem; }
+    .success-screen p { font-size: 1rem; color: var(--gray-70); max-width: 440px; line-height: 1.6; margin-bottom: 0.5rem; }
+    .ref-badge { display: inline-block; background: var(--gray-10); border: 1px solid var(--gray-20); border-radius: 4px; padding: 0.375rem 0.875rem; font: 700 0.9375rem var(--font-sans); color: var(--gray-90); margin: 0.75rem 0 1.5rem; letter-spacing: 0.04em; }
+    .success-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+    /* ── Progress bar ── */
+    .progress-bar-wrap { height: 4px; background: var(--gray-10); }
+    .progress-bar { height: 4px; background: var(--md-blue); transition: width 0.3s ease; }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .form-layout { grid-template-columns: 1fr; }
+      .stepper { position: static; }
+      .fields-grid { grid-template-columns: 1fr; }
+      .field.half, .field.quarter { grid-column: 1; }
+      .review-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header">
+  <a href="/portal/onestop-md.html" class="site-logo">
+    <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="44" style="height:44px;width:auto;" />
+  </a>
+  <div class="header-user" id="header-user"></div>
+</header>
+
+<!-- ── Breadcrumb ── -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/portal/onestop-md.html">Home</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/portal/housing-help.html">Find financial help</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/portal/housing-help.html">Housing</a>
+    <span class="breadcrumb-sep">›</span>
+    <a href="/portal/homestead-tax-credit-info.html">Homestead Tax Credit (HST)</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Application</span>
+  </div>
+</nav>
+
+<!-- ── Main ── -->
+<main>
+  <div class="form-layout" id="form-layout">
+
+    <!-- Stepper sidebar -->
+    <aside class="stepper" aria-label="Application steps">
+      <div class="stepper-title">Application steps</div>
+      <div id="stepper-list"></div>
+    </aside>
+
+    <!-- Form card -->
+    <div class="form-card">
+      <div class="progress-bar-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+      <div id="form-step-content"></div>
+    </div>
+
+  </div>
+
+  <!-- Success screen — outside the grid so it takes full width -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Application submitted!</h2>
+    <p>Your Homestead Tax Credit application has been received by the Maryland Department of Assessments and Taxation.</p>
+    <p>Your confirmation number is:</p>
+    <div class="ref-badge" id="ref-badge"></div>
+    <p style="font-size:0.875rem;color:var(--gray-50);">You will receive updates by email. Processing typically takes 4–6 weeks.</p>
+    <div class="success-actions">
+      <a href="/portal/my-applications.html" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        View my applications
+      </a>
+      <a href="/portal/onestop-md.html" class="btn btn-outline">Return to home</a>
+    </div>
+  </div>
+</main>
+
+<script>
+// ── Auth guard ──────────────────────────────────────
+const session = Auth.requireRole('resident');
+if (session) {
+  document.getElementById('header-user').innerHTML = `
+    <span>Signed in as <strong>${session.name}</strong></span>
+    <button class="btn-ghost" onclick="Auth.logout()">Sign out</button>
+  `;
+}
+
+// ── Merge admin-saved schema fields into the live form ──────────────────────
+// When an admin edits the Homestead Tax Credit form in the permit-platform
+// Form Builder, it writes the updated field list to localStorage under
+// 'admin_homestead_schema'. We pick that up here and replace the fields
+// inside the property + owner steps so changes are immediately visible.
+(function mergeAdminSchema() {
+  try {
+    const raw = localStorage.getItem('admin_homestead_schema');
+    if (!raw) return;
+    const adminFields = JSON.parse(raw);
+    if (!Array.isArray(adminFields) || !adminFields.length) return;
+
+    // Map admin keys to their field definitions
+    const byKey = {};
+    adminFields.forEach(f => { byKey[f.key] = f; });
+
+    // Keys that belong to the eligibility step (keep those managed by HOMESTEAD_SCHEMA)
+    const eligibilityKeys = new Set(['owns_property','principal_residence','lived_six_months','no_transfer','one_property']);
+
+    // Rebuild property + owner steps using admin field order
+    const nonEligibilityAdmin = adminFields.filter(f => !eligibilityKeys.has(f.key) && f.key !== 'certification' && f.key !== 'mailing_same' && f.key !== 'mailing_address' && f.key !== 'mailing_city' && f.key !== 'mailing_state' && f.key !== 'mailing_zip');
+
+    // Separate into property and owner buckets based on key prefix
+    const propertyKeys = new Set(['property_address','property_city','property_county','property_zip','property_account','move_in_date']);
+    const newPropertyFields = nonEligibilityAdmin.filter(f => propertyKeys.has(f.key) || f.key.startsWith('property_') || f.key === 'move_in_date');
+    const newOwnerFields    = nonEligibilityAdmin.filter(f => !propertyKeys.has(f.key) && !f.key.startsWith('property_') && f.key !== 'move_in_date');
+
+    // Convert admin field format to HOMESTEAD_SCHEMA field format
+    function convertField(af) {
+      return {
+        id: af.key,
+        label: af.label,
+        type: af.type === 'boolean' ? 'radio' : af.type,
+        required: !!af.required,
+        placeholder: af.placeholder || '',
+        hint: af.hint || undefined,
+        options: Array.isArray(af.options) && af.options.length
+          ? af.options.map(o => typeof o === 'string' ? { value: o.toLowerCase().replace(/\s+/g,'_'), label: o } : o)
+          : undefined,
+        width: af.key.endsWith('_city') || af.key.endsWith('_county') || af.key.endsWith('_zip') || af.key.endsWith('_state') ? 'half' : undefined,
+      };
+    }
+
+    if (newPropertyFields.length) {
+      const propStep = HOMESTEAD_SCHEMA.steps.find(s => s.id === 'property');
+      if (propStep) propStep.fields = newPropertyFields.map(convertField);
+    }
+    if (newOwnerFields.length) {
+      const ownerStep = HOMESTEAD_SCHEMA.steps.find(s => s.id === 'owner');
+      if (ownerStep) {
+        // Keep mailing address conditionals
+        const mailingFields = ownerStep.fields.filter(f => f.showIf || f.id === 'mailing_same');
+        ownerStep.fields = [...newOwnerFields.map(convertField), ...mailingFields];
+      }
+    }
+  } catch (e) {
+    // If anything goes wrong, fall back to the static schema silently
+  }
+})();
+
+// ── State ───────────────────────────────────────────
+const schema    = HOMESTEAD_SCHEMA;
+const formData  = {};
+let   stepIndex = 0;
+let   ineligibleMsg = null;
+
+// ── Stepper render ──────────────────────────────────
+function renderStepper() {
+  const list = document.getElementById('stepper-list');
+  list.innerHTML = schema.steps.map((step, i) => {
+    let cls = '';
+    if (i === stepIndex) cls = 'active';
+    else if (i < stepIndex) cls = 'complete';
+    const icon = i < stepIndex
+      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" width="12" height="12"><polyline points="20 6 9 17 4 12"/></svg>`
+      : (i + 1);
+    return `
+      <div class="step-item ${cls}" data-step="${i}">
+        <div class="step-circle">${icon}</div>
+        <div class="step-label">${step.title}</div>
+      </div>`;
+  }).join('');
+
+  // Progress bar
+  const pct = Math.round((stepIndex / (schema.steps.length - 1)) * 100);
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+// ── Field renderer ──────────────────────────────────
+function renderField(field, currentData) {
+  const val = currentData[field.id] !== undefined ? currentData[field.id] : '';
+
+  // Conditional show/hide
+  if (field.showIf) {
+    const dep = currentData[field.showIf.field];
+    if (dep !== field.showIf.value) return '';
+  }
+
+  const widthClass = field.width === 'half' ? 'half' : field.width === 'quarter' ? 'quarter' : 'full';
+  const req = field.required ? `<span class="required-star" aria-hidden="true">*</span>` : '';
+
+  let input = '';
+  if (field.type === 'radio') {
+    input = `<div class="radio-group" role="radiogroup" aria-required="${field.required}">` +
+      field.options.map(opt => `
+        <label class="radio-option">
+          <input type="radio" name="${field.id}" value="${opt.value}" ${val === opt.value ? 'checked' : ''} />
+          <span>${opt.label}</span>
+        </label>`).join('') +
+      `</div>`;
+  } else if (field.type === 'checkbox') {
+    input = `
+      <label class="checkbox-option">
+        <input type="checkbox" id="${field.id}" name="${field.id}" ${val === true ? 'checked' : ''} />
+        <span>${field.label}</span>
+      </label>`;
+    return `<div class="field full" data-field="${field.id}">
+      ${input}
+      <span class="field-error" id="err-${field.id}">This field is required.</span>
+    </div>`;
+  } else if (field.type === 'select') {
+    const opts = field.options.map(o => {
+      const v = typeof o === 'string' ? o : o.value;
+      const l = typeof o === 'string' ? o : o.label;
+      return `<option value="${v}" ${val === v ? 'selected' : ''}>${l}</option>`;
+    }).join('');
+    input = `<select id="${field.id}" name="${field.id}"><option value="">— Select —</option>${opts}</select>`;
+  } else {
+    input = `<input type="${field.type}" id="${field.id}" name="${field.id}"
+      value="${val}"
+      placeholder="${field.placeholder || ''}"
+      ${field.maxLength ? `maxlength="${field.maxLength}"` : ''}
+      ${field.pattern   ? `pattern="${field.pattern}"` : ''}
+    />`;
+  }
+
+  const hint = field.hint ? `<span class="field-hint">${field.hint}</span>` : '';
+  // For checkbox, we handle it above; this is for everything else
+  const labelHtml = field.type !== 'checkbox'
+    ? `<label class="field-label" for="${field.id}">${field.label}${req}</label>`
+    : '';
+
+  return `
+    <div class="field ${widthClass}" data-field="${field.id}">
+      ${labelHtml}
+      ${input}
+      ${hint}
+      <span class="field-error" id="err-${field.id}">${field.patternMessage || 'This field is required.'}</span>
+    </div>`;
+}
+
+// ── Step renderer ───────────────────────────────────
+function renderStep() {
+  const step     = schema.steps[stepIndex];
+  const isLast   = stepIndex === schema.steps.length - 1;
+  const isFirst  = stepIndex === 0;
+  const content  = document.getElementById('form-step-content');
+
+  // Review step special render
+  if (step.id === 'review') {
+    content.innerHTML = buildReviewHTML(step);
+    attachReviewListeners();
+    renderStepper();
+    return;
+  }
+
+  const fieldsHTML = `<div class="fields-grid">${step.fields.map(f => renderField(f, formData)).join('')}</div>`;
+
+  const backBtn = !isFirst
+    ? `<button type="button" class="btn btn-outline" id="btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back
+       </button>`
+    : `<a href="/portal/get-a-permit.html" class="btn btn-outline">Cancel</a>`;
+
+  content.innerHTML = `
+    <div class="form-card-header">
+      <div class="step-eyebrow">Step ${stepIndex + 1} of ${schema.steps.length}</div>
+      <h1>${step.title}</h1>
+      <p>${step.subtitle}</p>
+    </div>
+    <div class="form-card-body">
+      <div id="ineligible-alert"></div>
+      ${fieldsHTML}
+    </div>
+    <div class="form-card-footer">
+      ${backBtn}
+      <button type="button" class="btn btn-primary" id="btn-next">
+        ${isLast ? 'Submit application' : 'Continue'}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>`;
+
+  // Wire conditionals (mailing_same)
+  wireConditionals(step);
+
+  document.getElementById('btn-next').addEventListener('click', () => handleNext(step));
+  const backEl = document.getElementById('btn-back');
+  if (backEl) backEl.addEventListener('click', () => { stepIndex--; renderStep(); window.scrollTo(0,0); });
+
+  renderStepper();
+}
+
+function wireConditionals(step) {
+  step.fields.filter(f => !f.showIf).forEach(trigger => {
+    const dependents = step.fields.filter(f => f.showIf && f.showIf.field === trigger.id);
+    if (!dependents.length) return;
+    const inputs = document.querySelectorAll(`[name="${trigger.id}"]`);
+    inputs.forEach(inp => inp.addEventListener('change', () => rerenderConditionals(step)));
+  });
+}
+
+function rerenderConditionals(step) {
+  // Collect current values
+  step.fields.forEach(f => {
+    const els = document.querySelectorAll(`[name="${f.id}"]`);
+    if (!els.length) return;
+    if (f.type === 'radio') {
+      const checked = document.querySelector(`[name="${f.id}"]:checked`);
+      if (checked) formData[f.id] = checked.value;
+    } else if (f.type === 'checkbox') {
+      formData[f.id] = els[0].checked;
+    } else {
+      formData[f.id] = els[0].value;
+    }
+  });
+  // Re-render conditionally shown fields
+  step.fields.filter(f => f.showIf).forEach(f => {
+    const wrapper = document.querySelector(`[data-field="${f.id}"]`);
+    const shouldShow = formData[f.showIf.field] === f.showIf.value;
+    if (wrapper) {
+      wrapper.style.display = shouldShow ? '' : 'none';
+    } else if (shouldShow) {
+      // Need to inject
+      const grid = document.querySelector('.fields-grid');
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = renderField(f, formData);
+      grid.appendChild(tempDiv.firstElementChild);
+    }
+  });
+}
+
+// ── Validation + collect ────────────────────────────
+function collectAndValidate(step) {
+  let valid = true;
+  ineligibleMsg = null;
+
+  step.fields.forEach(field => {
+    // Skip hidden conditionals
+    if (field.showIf) {
+      const dep = formData[field.showIf.field];
+      if (dep !== field.showIf.value) return;
+    }
+
+    const errEl = document.getElementById(`err-${field.id}`);
+
+    if (field.type === 'radio') {
+      const checked = document.querySelector(`[name="${field.id}"]:checked`);
+      const val = checked ? checked.value : '';
+      formData[field.id] = val;
+      if (field.required && !val) {
+        if (errEl) { errEl.textContent = 'Please select an option.'; errEl.classList.add('show'); }
+        valid = false;
+      } else {
+        if (errEl) errEl.classList.remove('show');
+        // Eligibility check
+        if (field.failValue && val === field.failValue) {
+          ineligibleMsg = field.failMessage;
+        }
+      }
+    } else if (field.type === 'checkbox') {
+      const el = document.getElementById(field.id);
+      formData[field.id] = el ? el.checked : false;
+      if (field.required && !formData[field.id]) {
+        if (errEl) { errEl.textContent = 'You must check this box to continue.'; errEl.classList.add('show'); }
+        valid = false;
+      } else {
+        if (errEl) errEl.classList.remove('show');
+      }
+    } else {
+      const el = document.getElementById(field.id);
+      if (!el) return;
+      const val = el.value.trim();
+      formData[field.id] = val;
+      if (field.required && !val) {
+        el.classList.add('invalid');
+        if (errEl) { errEl.textContent = 'This field is required.'; errEl.classList.add('show'); }
+        valid = false;
+      } else if (val && field.pattern && !new RegExp(field.pattern).test(val)) {
+        el.classList.add('invalid');
+        if (errEl) { errEl.textContent = field.patternMessage || 'Invalid format.'; errEl.classList.add('show'); }
+        valid = false;
+      } else {
+        el.classList.remove('invalid');
+        if (errEl) errEl.classList.remove('show');
+      }
+    }
+  });
+  return valid;
+}
+
+// ── Maryland county → valid ZIP prefixes map ───────
+const COUNTY_ZIP_PREFIXES = {
+  'Allegany':              ['214', '215'],
+  'Anne Arundel':          ['207', '210', '211', '212', '214'],
+  'Baltimore City':        ['210', '211', '212'],
+  'Baltimore County':      ['210', '211', '212', '213', '214'],
+  'Calvert':               ['206', '207', '208', '209', '210'],
+  'Caroline':              ['216'],
+  'Carroll':               ['210', '211', '212', '213'],
+  'Cecil':                 ['219'],
+  'Charles':               ['206', '207', '208'],
+  'Dorchester':            ['216'],
+  'Frederick':             ['210', '211', '212', '213', '217'],
+  'Garrett':               ['215'],
+  'Harford':               ['210', '211', '212', '213', '214', '219'],
+  'Howard':                ['207', '210', '211', '212'],
+  'Kent':                  ['216'],
+  'Montgomery':            ['206', '207', '208', '209'],
+  "Prince George's":       ['206', '207', '208', '209'],
+  "Queen Anne's":          ['211', '214', '216'],
+  'Somerset':              ['218'],
+  "St. Mary's":            ['206', '207', '208', '209'],
+  'Talbot':                ['216'],
+  'Washington':            ['217'],
+  'Wicomico':              ['218'],
+  'Worcester':             ['218'],
+};
+
+function validateCountyZip(county, zip) {
+  if (!county || !zip || zip.length < 3) return true; // let required validation handle empties
+  const prefixes = COUNTY_ZIP_PREFIXES[county];
+  if (!prefixes) return true;
+  return prefixes.some(p => zip.startsWith(p));
+}
+
+function handleNext(step) {
+  const valid = collectAndValidate(step);
+  if (!valid) return;
+
+  // Cross-field county / ZIP check on the property step
+  if (step.id === 'property') {
+    const county = formData.property_county;
+    const zip    = formData.property_zip;
+    if (county && zip && !validateCountyZip(county, zip)) {
+      const zipEl  = document.getElementById('property_zip');
+      const errEl  = document.getElementById('err-property_zip');
+      if (zipEl)  zipEl.classList.add('invalid');
+      if (errEl) {
+        errEl.textContent = `ZIP code ${zip} does not match ${county} County. Please enter a valid ${county} ZIP code.`;
+        errEl.classList.add('show');
+      }
+      return;
+    }
+  }
+
+  // Show ineligible alert if any fail condition hit
+  if (ineligibleMsg) {
+    document.getElementById('ineligible-alert').innerHTML = `
+      <div class="alert alert-error" style="margin-bottom:1.25rem;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div class="alert-body">
+          <strong>You may not be eligible</strong>
+          <p>${ineligibleMsg}</p>
+        </div>
+      </div>`;
+    return;
+  }
+
+  stepIndex++;
+  renderStep();
+  window.scrollTo(0, 0);
+}
+
+// ── Review step ─────────────────────────────────────
+function buildReviewHTML(step) {
+  const stepLabels = {
+    eligibility: 'Eligibility',
+    property:    'Property Information',
+    owner:       'Owner Information',
+  };
+
+  const labelFor = (fieldId) => {
+    for (const s of schema.steps) {
+      const f = s.fields.find(f => f.id === fieldId);
+      if (f) return f.label;
+    }
+    return fieldId;
+  };
+
+  const displayVal = (fieldId, val) => {
+    if (val === undefined || val === null || val === '') return '—';
+    if (typeof val === 'boolean') return val ? 'Yes' : 'No';
+    // Radio: find label
+    for (const s of schema.steps) {
+      const f = s.fields.find(f => f.id === fieldId);
+      if (f && f.options) {
+        const opt = f.options.find(o => o.value === val || o === val);
+        if (opt) return typeof opt === 'string' ? opt : opt.label;
+      }
+    }
+    if (fieldId === 'owner_ssn_last4') return '••••';
+    return val;
+  };
+
+  const sections = schema.steps
+    .filter(s => s.id !== 'review')
+    .map(s => {
+      const fieldsHtml = s.fields
+        .filter(f => f.type !== 'checkbox')
+        .filter(f => {
+          if (!f.showIf) return true;
+          return formData[f.showIf.field] === f.showIf.value;
+        })
+        .map(f => `
+          <div class="review-field">
+            <span class="review-label">${f.label.length > 60 ? f.label.slice(0,60)+'…' : f.label}</span>
+            <span class="review-value">${displayVal(f.id, formData[f.id])}</span>
+          </div>`).join('');
+
+      return `
+        <div class="review-section">
+          <div class="review-section-title">
+            ${stepLabels[s.id] || s.title}
+            <span class="review-edit-link" data-goto="${schema.steps.findIndex(x => x.id === s.id)}">Edit</span>
+          </div>
+          <div class="review-grid">${fieldsHtml}</div>
+        </div>`;
+    }).join('<hr style="border:none;border-top:1px solid var(--gray-10);margin:1.25rem 0;">');
+
+  const certField = step.fields.find(f => f.id === 'certification');
+  const certChecked = formData.certification ? 'checked' : '';
+
+  return `
+    <div class="form-card-header">
+      <div class="step-eyebrow">Step ${stepIndex + 1} of ${schema.steps.length}</div>
+      <h1>${step.title}</h1>
+      <p>${step.subtitle}</p>
+    </div>
+    <div class="form-card-body">
+      ${sections}
+      <hr style="border:none;border-top:1px solid var(--gray-10);margin:1.25rem 0;">
+      <div class="field full" data-field="certification">
+        <label class="checkbox-option">
+          <input type="checkbox" id="certification" name="certification" ${certChecked} />
+          <span>${certField.label}</span>
+        </label>
+        <span class="field-error" id="err-certification">You must certify to submit your application.</span>
+      </div>
+    </div>
+    <div class="form-card-footer">
+      <button type="button" class="btn btn-outline" id="btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back
+      </button>
+      <button type="button" class="btn btn-primary" id="btn-submit">
+        Submit application
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>`;
+}
+
+function attachReviewListeners() {
+  document.getElementById('btn-back').addEventListener('click', () => { stepIndex--; renderStep(); window.scrollTo(0,0); });
+  document.getElementById('btn-submit').addEventListener('click', handleSubmit);
+  document.querySelectorAll('.review-edit-link').forEach(el => {
+    el.addEventListener('click', () => { stepIndex = parseInt(el.dataset.goto); renderStep(); window.scrollTo(0,0); });
+  });
+}
+
+function handleSubmit() {
+  const certEl  = document.getElementById('certification');
+  const errEl   = document.getElementById('err-certification');
+  if (!certEl.checked) { errEl.classList.add('show'); return; }
+  errEl.classList.remove('show');
+  formData.certification = true;
+
+  // Pre-fill owner name/email from session if blank
+  if (!formData.owner_first_name) formData.owner_first_name = session.name.split(' ')[0] || '';
+  if (!formData.owner_last_name)  formData.owner_last_name  = session.name.split(' ')[1] || '';
+  if (!formData.owner_email)      formData.owner_email      = session.email || '';
+
+  const sub = Submissions.create(session.userId, 'Homestead Tax Credit', formData);
+
+  // Hide the form grid, show success full-width
+  document.getElementById('form-layout').style.display = 'none';
+  document.getElementById('ref-badge').textContent = sub.id;
+  document.getElementById('success-screen').classList.add('show');
+  window.scrollTo(0, 0);
+}
+
+// ── Init ────────────────────────────────────────────
+renderStep();
+</script>
+</body>
+</html>

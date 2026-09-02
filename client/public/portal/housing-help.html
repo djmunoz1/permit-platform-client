@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Housing Help | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── MDWDS Tokens ── */
+    :root {
+      --md-navy:         #1b2a4a;
+      --md-navy-dark:    #0f1e36;
+      --md-blue:         #2378C3;
+      --md-blue-dark:    #1a5d9a;
+      --md-blue-light:   #d9e8f6;
+      --md-blue-lighter: #eff6fb;
+      --md-red:          #BE0000;
+      --md-gold:         #F0B429;
+      --md-gold-light:   #fef9e7;
+      --md-green:        #2e7d32;
+      --md-green-light:  #e8f5e9;
+      --md-teal:         #0071bc;
+      --md-teal-light:   #e0f0ff;
+      --md-purple:       #5c35a8;
+      --md-purple-light: #ede8f8;
+      --md-pink:         #c2185b;
+      --md-pink-light:   #fce4ec;
+      --gray-5:   #f8f8f8;
+      --gray-10:  #f0f0f0;
+      --gray-20:  #e6e6e6;
+      --gray-30:  #c9c9c9;
+      --gray-50:  #757575;
+      --gray-70:  #454545;
+      --gray-90:  #1b1b1b;
+      --white:    #ffffff;
+      --font-sans:  'Source Sans 3', -apple-system, sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --max-width: 1240px;
+      --nav-h: 68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--gray-90); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--md-blue); text-decoration: underline; }
+    a:hover { color: var(--md-blue-dark); }
+
+    /* ── Shared header ── */
+    .site-header { background: var(--white); border-bottom: 1px solid var(--gray-20); position: sticky; top: 0; z-index: 200; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .header-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; height: var(--nav-h); display: flex; align-items: center; gap: 2rem; }
+    .site-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+    .primary-nav { flex: 1; display: flex; align-items: center; }
+    .primary-nav ul { list-style: none; display: flex; align-items: center; gap: 0.25rem; }
+    .primary-nav a { display: flex; align-items: center; gap: 0.3rem; color: var(--gray-90); text-decoration: none; font-size: 0.9375rem; font-weight: 600; padding: 0.5rem 0.75rem; border-radius: 4px; transition: background 0.15s; white-space: nowrap; }
+    .primary-nav a:hover { background: var(--gray-10); color: var(--gray-90); }
+    .chevron { width: 14px; height: 14px; opacity: 0.6; }
+    .header-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .lang-btn { display: flex; align-items: center; gap: 0.3rem; color: var(--gray-70); background: none; border: none; font: 0.9375rem/1 var(--font-sans); cursor: pointer; padding: 0.5rem 0.625rem; border-radius: 4px; transition: background 0.15s; }
+    .lang-btn:hover { background: var(--gray-10); }
+    .lang-btn svg { width: 18px; height: 18px; }
+    .sign-in-btn { display: inline-flex; align-items: center; padding: 0.5rem 1.25rem; border: 2px solid var(--md-navy); border-radius: 4px; color: var(--md-navy); background: transparent; font: 600 0.9375rem/1 var(--font-sans); text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+    .sign-in-btn:hover { background: var(--md-navy); color: var(--white); }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb { border-bottom: 1px solid var(--gray-10); padding: 0.75rem 1.5rem; }
+    .breadcrumb-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--gray-70); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    .breadcrumb a:hover { color: var(--md-blue); text-decoration: underline; }
+    .breadcrumb a svg { width: 15px; height: 15px; }
+    .breadcrumb-sep { color: var(--gray-30); }
+    .breadcrumb-sep svg { width: 14px; height: 14px; display: block; }
+    .breadcrumb-current { color: var(--gray-70); font-weight: 600; }
+
+    /* ── Hero ── */
+    .page-hero { padding: 2.5rem 1.5rem 0; background: var(--white); }
+    .page-hero-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 420px; gap: 3rem; align-items: start; }
+
+    .hero-left { padding-bottom: 2.5rem; }
+    .page-title-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .page-icon { width: 60px; height: 60px; flex-shrink: 0; background: var(--md-green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--md-green); }
+    .page-icon svg { width: 30px; height: 30px; }
+    .page-hero h1 { font-family: var(--font-serif); font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 900; color: var(--gray-90); line-height: 1.15; letter-spacing: -0.02em; }
+    .page-hero .subtext { font-size: 1.0625rem; color: var(--gray-70); margin-bottom: 1.75rem; line-height: 1.6; max-width: 480px; }
+
+    .search-wrap { display: flex; border: 2px solid var(--gray-30); border-radius: 6px; overflow: hidden; max-width: 500px; margin-bottom: 0.875rem; transition: border-color 0.15s, box-shadow 0.15s; }
+    .search-wrap:focus-within { border-color: var(--md-blue); box-shadow: 0 0 0 3px rgba(35,120,195,0.2); }
+    .search-icon-wrap { display: flex; align-items: center; padding: 0 0.875rem; color: var(--gray-50); background: var(--white); }
+    .search-icon-wrap svg { width: 20px; height: 20px; }
+    .search-input { flex: 1; border: none; outline: none; font: 1rem var(--font-sans); color: var(--gray-90); padding: 0.875rem 0.5rem; background: var(--white); }
+    .search-input::placeholder { color: var(--gray-50); }
+    .search-btn { background: var(--md-navy); color: var(--white); border: none; padding: 0 1.5rem; font: 700 1rem var(--font-sans); cursor: pointer; white-space: nowrap; transition: background 0.15s; }
+    .search-btn:hover { background: var(--md-navy-dark); }
+
+    .try-line { font-size: 0.875rem; color: var(--gray-70); margin-bottom: 0; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .try-label { color: var(--gray-50); white-space: nowrap; }
+    .pill { display: inline-block; padding: 0.25rem 0.75rem; border: 1px solid var(--gray-30); border-radius: 999px; font-size: 0.8125rem; color: var(--gray-70); text-decoration: none; background: var(--white); transition: border-color 0.15s, background 0.15s; }
+    .pill:hover { border-color: var(--md-blue); background: var(--md-blue-lighter); color: var(--md-blue); }
+
+    /* Right — house photo + find help card */
+    .hero-right { position: relative; }
+    .hero-photo { width: 100%; height: 240px; border-radius: 12px 12px 0 0; overflow: hidden; background: var(--md-blue-lighter); }
+    .hero-photo svg { width: 100%; height: 100%; display: block; }
+    .find-help-card { background: var(--white); border: 1px solid var(--gray-20); border-radius: 0 0 12px 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 1.375rem 1.5rem 1.5rem; }
+    .find-help-card h3 { font-size: 1.0625rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.5rem; }
+    .find-help-card p { font-size: 0.9rem; color: var(--gray-70); margin-bottom: 1.125rem; line-height: 1.5; }
+    .btn-cta { display: flex; align-items: center; justify-content: center; width: 100%; padding: 0.875rem 1.5rem; background: var(--md-navy); color: var(--white); border: none; border-radius: 4px; font: 700 1rem var(--font-sans); cursor: pointer; text-decoration: none; transition: background 0.15s; }
+    .btn-cta:hover { background: var(--md-navy-dark); color: var(--white); }
+
+    /* ── Category cards ── */
+    .browse-section { padding: 3rem 1.5rem 2.5rem; }
+    .browse-section-inner { max-width: var(--max-width); margin: 0 auto; }
+    .section-header { margin-bottom: 1.5rem; }
+    .section-header h2 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.25rem; }
+    .section-header p { font-size: 0.9375rem; color: var(--gray-50); }
+
+    .cat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+    .cat-card { display: flex; flex-direction: column; padding: 1.375rem 1.125rem 1.125rem; border: 1px solid var(--gray-20); border-radius: 8px; text-decoration: none; color: var(--gray-90); background: var(--white); transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s; }
+    .cat-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-color: var(--gray-30); transform: translateY(-2px); color: var(--gray-90); }
+    .cat-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.875rem; flex-shrink: 0; }
+    .cat-icon svg { width: 22px; height: 22px; }
+    .cat-card h3 { font-size: 0.9375rem; font-weight: 700; line-height: 1.3; margin-bottom: auto; color: var(--gray-90); }
+    .cat-arrow { margin-top: 1rem; color: var(--md-blue); }
+    .cat-arrow svg { width: 18px; height: 18px; }
+
+    .icon-green  { background: var(--md-green-light);  color: var(--md-green); }
+    .icon-blue   { background: var(--md-teal-light);   color: var(--md-teal); }
+    .icon-gold   { background: var(--md-gold-light);   color: #b7860b; }
+    .icon-purple { background: var(--md-purple-light); color: var(--md-purple); }
+    .icon-pink   { background: var(--md-pink-light);   color: var(--md-pink); }
+    .icon-gray   { background: var(--gray-10);         color: var(--gray-70); }
+
+    /* ── Program list ── */
+    .programs-section { padding: 0 1.5rem 3rem; }
+    .programs-inner { max-width: var(--max-width); margin: 0 auto; }
+    .programs-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem; }
+    .programs-header h2 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.25rem; }
+    .programs-header p { font-size: 0.9375rem; color: var(--gray-50); }
+    .view-all-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.9375rem; font-weight: 700; color: var(--md-blue); text-decoration: none; white-space: nowrap; }
+    .view-all-link:hover { text-decoration: underline; }
+    .view-all-link svg { width: 16px; height: 16px; }
+
+    .program-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--gray-20); border-radius: 8px; overflow: hidden; }
+    .program-row { display: flex; align-items: center; gap: 1.25rem; padding: 1.25rem 1.5rem; background: var(--white); border-bottom: 1px solid var(--gray-10); text-decoration: none; color: var(--gray-90); transition: background 0.15s; }
+    .program-row:last-child { border-bottom: none; }
+    .program-row:hover { background: var(--gray-5); }
+    .prog-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .prog-icon svg { width: 22px; height: 22px; }
+    .prog-body { flex: 1; min-width: 0; }
+    .prog-name { font-size: 1rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.25rem; }
+    .prog-desc { font-size: 0.875rem; color: var(--gray-70); line-height: 1.4; margin-bottom: 0.5rem; }
+    .prog-tags { display: flex; gap: 0.375rem; flex-wrap: wrap; }
+    .tag { display: inline-block; padding: 0.2rem 0.625rem; border: 1px solid var(--gray-20); border-radius: 999px; font-size: 0.75rem; color: var(--gray-70); background: var(--gray-5); }
+    .popular-badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.625rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; background: var(--md-gold-light); color: #b7860b; border: 1px solid #f0d080; }
+    .popular-badge svg { width: 12px; height: 12px; }
+    .prog-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; flex-shrink: 0; }
+    .learn-more { font-size: 0.875rem; font-weight: 700; color: var(--md-blue); text-decoration: none; }
+    .learn-more:hover { text-decoration: underline; }
+    .prog-chevron { color: var(--gray-30); }
+    .prog-chevron svg { width: 18px; height: 18px; display: block; }
+
+    /* ── Still not sure strip ── */
+    .guidance-strip { background: var(--gray-5); border-top: 1px solid var(--gray-20); border-bottom: 1px solid var(--gray-20); padding: 2rem 1.5rem; }
+    .guidance-strip-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 2rem; align-items: center; }
+    .guidance-left { display: flex; align-items: flex-start; gap: 1rem; }
+    .guidance-icon { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; background: var(--md-blue-light); display: flex; align-items: center; justify-content: center; color: var(--md-blue); }
+    .guidance-icon svg { width: 22px; height: 22px; }
+    .guidance-text strong { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--md-blue); margin-bottom: 0.25rem; }
+    .guidance-text p { font-size: 0.875rem; color: var(--gray-70); line-height: 1.4; margin-bottom: 0.75rem; }
+    .btn-outline-sm { display: inline-flex; align-items: center; padding: 0.5rem 1.125rem; border: 2px solid var(--md-navy); border-radius: 4px; font: 600 0.875rem var(--font-sans); color: var(--md-navy); text-decoration: none; transition: background 0.15s; }
+    .btn-outline-sm:hover { background: var(--md-navy); color: var(--white); }
+    .trust-item { display: flex; align-items: flex-start; gap: 0.75rem; }
+    .trust-icon { width: 36px; height: 36px; flex-shrink: 0; color: var(--gray-50); }
+    .trust-icon svg { width: 36px; height: 36px; }
+    .trust-text strong { display: block; font-size: 0.875rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.125rem; }
+    .trust-text p { font-size: 0.8125rem; color: var(--gray-70); line-height: 1.4; }
+
+    /* ── Other ways ── */
+    .other-ways { padding: 3rem 1.5rem; }
+    .other-ways-inner { max-width: var(--max-width); margin: 0 auto; }
+    .other-ways h2 { font-family: var(--font-serif); font-size: 1.125rem; font-weight: 700; color: var(--gray-90); margin-bottom: 1.25rem; }
+    .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 0.875rem; }
+    .contact-item-icon { width: 36px; height: 36px; flex-shrink: 0; color: var(--gray-70); }
+    .contact-item-icon svg { width: 36px; height: 36px; }
+    .contact-item strong { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.2rem; }
+    .contact-item p { font-size: 0.8125rem; color: var(--gray-70); line-height: 1.4; }
+
+    /* ── Footer ── */
+    .site-footer { background: var(--white); border-top: 2px solid var(--gray-20); padding: 1.25rem 1.5rem; }
+    .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: var(--gray-70); text-decoration: none; font-size: 0.875rem; }
+    .footer-links a:hover { color: var(--md-blue); text-decoration: underline; }
+    .footer-copy { font-size: 0.8125rem; color: var(--gray-50); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) { .cat-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 860px) {
+      .page-hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .guidance-strip-inner { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .primary-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/portal/onestop-md.html" class="site-logo" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="48" style="height:48px;width:auto;" />
+    </a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#">Browse Services <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">For Business <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">For Residents <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">Help &amp; Resources <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <button class="lang-btn" aria-label="Select language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        English
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <a href="/portal/login.html" class="sign-in-btn">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── Breadcrumb ── -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/portal/onestop-md.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <span class="breadcrumb-sep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+    <span class="breadcrumb-current" aria-current="page">Find financial help</span>
+    <span class="breadcrumb-sep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+    <span class="breadcrumb-current">Housing</span>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ── Hero ── -->
+  <section class="page-hero" aria-labelledby="page-heading">
+    <div class="page-hero-inner">
+      <div class="hero-left">
+        <div class="page-title-row">
+          <div class="page-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h1 id="page-heading">Housing help</h1>
+        </div>
+        <p class="subtext">Explore programs that can help you pay for housing, reduce costs, buy a home, or keep your home.</p>
+        <form class="search-wrap" role="search" action="#" method="get">
+          <span class="search-icon-wrap" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+          <input class="search-input" type="search" name="q" placeholder="What can we help you with?" aria-label="Search housing programs" />
+          <button class="search-btn" type="submit">Search</button>
+        </form>
+        <div class="try-line">
+          <span class="try-label">Try searching:</span>
+          <a class="pill" href="/portal/homestead-tax-credit-info.html">Homestead tax credit</a>
+          <a class="pill" href="#">Rent help</a>
+          <a class="pill" href="#">Homeowner assistance</a>
+          <a class="pill" href="#">Property tax relief</a>
+          <a class="pill" href="#">First-time homebuyer</a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="hero-photo">
+          <!-- House illustration -->
+          <svg viewBox="0 0 420 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <defs>
+              <linearGradient id="hsky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c8dff0"/>
+                <stop offset="100%" stop-color="#e8f4fb"/>
+              </linearGradient>
+            </defs>
+            <rect width="420" height="240" fill="url(#hsky)"/>
+            <!-- Ground -->
+            <rect x="0" y="185" width="420" height="55" fill="#7ab648"/>
+            <rect x="0" y="185" width="420" height="6" fill="#6aa438" opacity="0.5"/>
+            <!-- House body -->
+            <rect x="90" y="115" width="240" height="80" fill="#8bb87a"/>
+            <!-- Siding lines -->
+            <rect x="90" y="130" width="240" height="2" fill="#7aaa68" opacity="0.5"/>
+            <rect x="90" y="148" width="240" height="2" fill="#7aaa68" opacity="0.5"/>
+            <rect x="90" y="166" width="240" height="2" fill="#7aaa68" opacity="0.5"/>
+            <!-- Roof -->
+            <polygon points="75,117 210,48 345,117" fill="#5a7a3a"/>
+            <polygon points="75,117 210,56 345,117" fill="#6a8a4a" opacity="0.4"/>
+            <!-- Chimney -->
+            <rect x="270" y="62" width="22" height="45" fill="#8a6a4a"/>
+            <rect x="267" y="58" width="28" height="8" fill="#7a5a3a"/>
+            <!-- Windows -->
+            <rect x="110" y="128" width="50" height="40" rx="2" fill="#a8d4e8" opacity="0.85"/>
+            <rect x="110" y="128" width="50" height="40" rx="2" fill="none" stroke="#88b8cc" stroke-width="2"/>
+            <line x1="135" y1="128" x2="135" y2="168" stroke="#88b8cc" stroke-width="1.5"/>
+            <line x1="110" y1="148" x2="160" y2="148" stroke="#88b8cc" stroke-width="1.5"/>
+            <rect x="260" y="128" width="50" height="40" rx="2" fill="#a8d4e8" opacity="0.85"/>
+            <rect x="260" y="128" width="50" height="40" rx="2" fill="none" stroke="#88b8cc" stroke-width="2"/>
+            <line x1="285" y1="128" x2="285" y2="168" stroke="#88b8cc" stroke-width="1.5"/>
+            <line x1="260" y1="148" x2="310" y2="148" stroke="#88b8cc" stroke-width="1.5"/>
+            <!-- Door -->
+            <rect x="181" y="148" width="58" height="47" rx="2" fill="#5a3a1a"/>
+            <rect x="181" y="148" width="58" height="47" rx="2" fill="none" stroke="#4a2a0a" stroke-width="1.5"/>
+            <rect x="200" y="168" width="8" height="8" rx="4" fill="#c8a020"/>
+            <!-- Step -->
+            <rect x="174" y="193" width="72" height="6" fill="#9a8060"/>
+            <!-- Trees -->
+            <rect x="35" y="140" width="8" height="50" fill="#5a3a1a"/>
+            <ellipse cx="39" cy="130" rx="22" ry="28" fill="#4a8a30"/>
+            <ellipse cx="39" cy="118" rx="16" ry="22" fill="#5a9a38"/>
+            <rect x="370" y="145" width="8" height="45" fill="#5a3a1a"/>
+            <ellipse cx="374" cy="135" rx="20" ry="26" fill="#5a9030"/>
+            <ellipse cx="374" cy="124" rx="14" ry="20" fill="#6aaa38"/>
+            <!-- Flowers -->
+            <circle cx="100" cy="190" r="4" fill="#e8a0c0"/>
+            <circle cx="116" cy="188" r="3" fill="#f0b8a8"/>
+            <circle cx="300" cy="190" r="4" fill="#e8c0a0"/>
+            <circle cx="318" cy="188" r="3" fill="#c8a8e0"/>
+            <!-- Sun -->
+            <circle cx="370" cy="38" r="22" fill="#f8e060" opacity="0.8"/>
+            <circle cx="370" cy="38" r="16" fill="#f8e060"/>
+          </svg>
+        </div>
+        <div class="find-help-card">
+          <h3>Not sure where to start?</h3>
+          <p>Answer a few questions and we'll help match you with programs you may be eligible for.</p>
+          <a href="#" class="btn-cta">Find help for me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Category cards ── -->
+  <section class="browse-section" aria-labelledby="browse-heading">
+    <div class="browse-section-inner">
+      <div class="section-header">
+        <h2 id="browse-heading">Find programs by what you need</h2>
+        <p>Choose the option that best fits your situation.</p>
+      </div>
+      <div class="cat-grid">
+        <a href="/portal/homestead-tax-credit-info.html" class="cat-card">
+          <div class="cat-icon icon-green" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3>Lower my property taxes</h3>
+          <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a href="#" class="cat-card">
+          <div class="cat-icon icon-blue" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3>Get help paying my rent</h3>
+          <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a href="#" class="cat-card">
+          <div class="cat-icon icon-gold" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>Get help with home repairs</h3>
+          <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a href="#" class="cat-card">
+          <div class="cat-icon icon-purple" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Buy a home</h3>
+          <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a href="#" class="cat-card">
+          <div class="cat-icon icon-pink" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3>Avoid foreclosure or eviction</h3>
+          <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a href="#" class="cat-card">
+          <div class="cat-icon icon-gray" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3>I'm not sure what I need</h3>
+          <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Popular programs ── -->
+  <section class="programs-section" aria-labelledby="programs-heading">
+    <div class="programs-inner">
+      <div class="programs-header">
+        <div>
+          <h2 id="programs-heading">Popular programs</h2>
+          <p>These programs may be a good fit for you.</p>
+        </div>
+        <a href="#" class="view-all-link">View all housing programs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="program-list">
+
+        <a href="/portal/homestead-tax-credit-info.html" class="program-row">
+          <div class="prog-icon icon-green" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="prog-body">
+            <div class="prog-name">Homestead Tax Credit</div>
+            <div class="prog-desc">Get a credit on your property taxes if you own and live in your home as your principal residence.</div>
+            <div class="prog-tags">
+              <span class="tag">Property tax relief</span>
+              <span class="tag">Homeowners</span>
+            </div>
+          </div>
+          <div class="prog-right">
+            <span class="popular-badge"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Popular</span>
+            <span class="learn-more">Learn more</span>
+            <span class="prog-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" class="program-row">
+          <div class="prog-icon icon-blue" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <div class="prog-body">
+            <div class="prog-name">Renters' Tax Credit</div>
+            <div class="prog-desc">Get a credit on your Maryland state income tax if you rent your home.</div>
+            <div class="prog-tags">
+              <span class="tag">Tax credit</span>
+              <span class="tag">Renters</span>
+            </div>
+          </div>
+          <div class="prog-right">
+            <span class="learn-more">Learn more</span>
+            <span class="prog-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" class="program-row">
+          <div class="prog-icon icon-gold" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div class="prog-body">
+            <div class="prog-name">Homeowners' Property Tax Credit</div>
+            <div class="prog-desc">Get a credit on your property taxes based on your household income.</div>
+            <div class="prog-tags">
+              <span class="tag">Property tax relief</span>
+              <span class="tag">Homeowners</span>
+            </div>
+          </div>
+          <div class="prog-right">
+            <span class="learn-more">Learn more</span>
+            <span class="prog-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" class="program-row">
+          <div class="prog-icon icon-purple" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
+          </div>
+          <div class="prog-body">
+            <div class="prog-name">Emergency Rental Assistance</div>
+            <div class="prog-desc">Get help paying rent and utilities if you're at risk of eviction or falling behind.</div>
+            <div class="prog-tags">
+              <span class="tag">Rent help</span>
+              <span class="tag">Households in need</span>
+            </div>
+          </div>
+          <div class="prog-right">
+            <span class="learn-more">Learn more</span>
+            <span class="prog-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" class="program-row">
+          <div class="prog-icon icon-pink" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div class="prog-body">
+            <div class="prog-name">Home Repair Programs</div>
+            <div class="prog-desc">Find grants and loans to help repair or improve your home.</div>
+            <div class="prog-tags">
+              <span class="tag">Home repairs</span>
+              <span class="tag">Homeowners</span>
+            </div>
+          </div>
+          <div class="prog-right">
+            <span class="learn-more">Learn more</span>
+            <span class="prog-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Still not sure ── -->
+  <div class="guidance-strip">
+    <div class="guidance-strip-inner">
+      <div class="guidance-left">
+        <div class="guidance-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="guidance-text">
+          <strong>Still not sure?</strong>
+          <p>Answer a few questions and we'll show you programs you may be eligible for.</p>
+          <a href="#" class="btn-outline-sm">Find help for me</a>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="trust-text"><strong>It's quick</strong><p>Takes just a few minutes.</p></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="trust-text"><strong>It's private</strong><p>Your answers are kept secure.</p></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="trust-text"><strong>It's customized</strong><p>We'll match you with programs that fit.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Other ways to get help ── -->
+  <section class="other-ways" aria-labelledby="other-heading">
+    <div class="other-ways-inner">
+      <h2 id="other-heading">Other ways to get help</h2>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="contact-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div><strong>Chat with us</strong><p>Get answers to common questions.</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><strong>Call</strong><p>Speak with a customer service representative.</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><strong>Visit a local office</strong><p>Find help near you.</p></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div><strong>Resources and guides</strong><p>Learn more about housing help in Maryland.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="/portal/onestop-md.html" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="40" style="height:40px;width:auto;" />
+    </a>
+    <nav aria-label="Footer navigation">
+      <ul class="footer-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Site Map</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </nav>
+    <span class="footer-copy">© 2024 State of Maryland</span>
+  </div>
+</footer>
+
+</body>
+</html>

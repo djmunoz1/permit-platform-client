@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Applications | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
+  <script src="/portal/app.js"></script>
+  <style>
+    :root {
+      --md-navy: #1b2a4a; --md-navy-dark: #0f1e36;
+      --md-blue: #2378C3; --md-blue-dark: #1a5d9a;
+      --md-blue-light: #d9e8f6; --md-blue-lighter: #eff6fb;
+      --md-red: #BE0000; --md-gold: #F0B429; --md-gold-light: #fef9e7;
+      --md-green: #2e7d32; --md-green-light: #e8f5e9;
+      --gray-5: #f8f8f8; --gray-10: #f0f0f0; --gray-20: #e6e6e6;
+      --gray-30: #c9c9c9; --gray-50: #757575; --gray-70: #454545;
+      --gray-90: #1b1b1b; --white: #ffffff;
+      --font-sans: 'Source Sans 3', sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --max-width: 1000px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--gray-5); color: var(--gray-90); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+    a { color: var(--md-blue); }
+
+    /* ── Header ── */
+    .site-header { background: var(--white); border-bottom: 1px solid var(--gray-20); padding: 0 1.5rem; height: 68px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 4px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+    .site-logo { display: flex; align-items: center; text-decoration: none; }
+    .header-user { display: flex; align-items: center; gap: 1rem; font-size: 0.875rem; color: var(--gray-70); }
+    .header-user strong { color: var(--gray-90); }
+    .btn-ghost { background: none; border: 1px solid var(--gray-30); border-radius: 4px; padding: 0.375rem 0.75rem; font: 600 0.8125rem var(--font-sans); color: var(--gray-70); cursor: pointer; transition: border-color 0.15s; }
+    .btn-ghost:hover { border-color: var(--gray-50); color: var(--gray-90); }
+
+    /* ── Page shell ── */
+    main { flex: 1; padding: 2rem 1.5rem 4rem; }
+    .page-inner { max-width: var(--max-width); margin: 0 auto; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 2rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    .page-header h1 { font-family: var(--font-serif); font-size: 1.625rem; font-weight: 700; color: var(--gray-90); }
+    .page-header p { font-size: 0.9375rem; color: var(--gray-70); margin-top: 0.25rem; }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; border-radius: 4px; font: 700 0.9375rem var(--font-sans); cursor: pointer; border: 2px solid transparent; text-decoration: none; transition: background 0.15s; }
+    .btn-primary { background: var(--md-navy); color: var(--white); border-color: var(--md-navy); }
+    .btn-primary:hover { background: var(--md-navy-dark); color: var(--white); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* ── Summary stat tiles ── */
+    .stat-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stat-tile { background: var(--white); border: 1px solid var(--gray-20); border-radius: 8px; padding: 1.125rem 1.25rem; }
+    .stat-tile .label { font-size: 0.8125rem; color: var(--gray-50); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.375rem; }
+    .stat-tile .value { font-size: 1.75rem; font-weight: 700; color: var(--gray-90); line-height: 1; }
+    .stat-tile .sub { font-size: 0.8125rem; color: var(--gray-50); margin-top: 0.25rem; }
+    .stat-tile.highlight { border-left: 4px solid var(--md-blue); }
+
+    /* ── Empty state ── */
+    .empty-state { background: var(--white); border: 1px solid var(--gray-20); border-radius: 8px; padding: 3rem 2rem; text-align: center; }
+    .empty-icon { width: 64px; height: 64px; background: var(--md-blue-lighter); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--md-blue); }
+    .empty-icon svg { width: 32px; height: 32px; }
+    .empty-state h2 { font-size: 1.125rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.5rem; }
+    .empty-state p { font-size: 0.9375rem; color: var(--gray-70); margin-bottom: 1.5rem; }
+
+    /* ── Application cards ── */
+    .app-list { display: flex; flex-direction: column; gap: 1rem; }
+    .app-card { background: var(--white); border: 1px solid var(--gray-20); border-radius: 8px; overflow: hidden; transition: box-shadow 0.15s; cursor: pointer; }
+    .app-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .app-card-header { padding: 1.25rem 1.5rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--gray-10); }
+    .app-card-title { display: flex; align-items: flex-start; gap: 1rem; }
+    .app-card-icon { width: 40px; height: 40px; background: var(--md-gold-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #b7860b; flex-shrink: 0; }
+    .app-card-icon svg { width: 20px; height: 20px; }
+    .app-name { font-size: 1rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.25rem; }
+    .app-meta { font-size: 0.8125rem; color: var(--gray-50); }
+    .app-meta span + span::before { content: '·'; margin: 0 0.375rem; }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      padding: 0.3rem 0.75rem; border-radius: 999px;
+      font-size: 0.8125rem; font-weight: 700; white-space: nowrap;
+      border: 1px solid;
+    }
+    .status-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* ── Timeline ── */
+    .app-timeline { padding: 1.25rem 1.5rem; display: none; }
+    .app-card.expanded .app-timeline { display: block; }
+    .app-card.expanded .app-card-header { border-bottom: 1px solid var(--gray-20); }
+    .timeline-heading { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-50); margin-bottom: 1rem; }
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 2px; background: var(--gray-20); }
+    .timeline-item { position: relative; margin-bottom: 1.25rem; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot { position: absolute; left: -1.5rem; top: 2px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--white); box-shadow: 0 0 0 2px var(--gray-30); background: var(--white); }
+    .timeline-item.current .timeline-dot { background: var(--md-blue); box-shadow: 0 0 0 2px var(--md-blue); }
+    .timeline-item.done .timeline-dot { background: var(--md-green); box-shadow: 0 0 0 2px var(--md-green); }
+    .timeline-label { font-size: 0.9375rem; font-weight: 600; color: var(--gray-90); }
+    .timeline-date  { font-size: 0.8125rem; color: var(--gray-50); margin-top: 0.125rem; }
+    .timeline-note  { font-size: 0.875rem; color: var(--gray-70); margin-top: 0.25rem; font-style: italic; }
+
+    /* ── Detail summary in expanded card ── */
+    .app-detail { padding: 0 1.5rem 1.25rem; display: none; }
+    .app-card.expanded .app-detail { display: block; }
+    .detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem 1.5rem; margin-bottom: 1.25rem; }
+    .detail-field .d-label { font-size: 0.8125rem; color: var(--gray-50); margin-bottom: 0.125rem; }
+    .detail-field .d-value { font-size: 0.9375rem; font-weight: 600; color: var(--gray-90); }
+
+    /* ── Notification banner ── */
+    .notif-banner { background: var(--md-blue-lighter); border: 1px solid var(--md-blue-light); border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: none; }
+    .notif-banner.has-notifs { display: block; }
+    .notif-banner-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+    .notif-banner-title { font-size: 0.9375rem; font-weight: 700; color: var(--md-blue); display: flex; align-items: center; gap: 0.5rem; }
+    .notif-badge { background: var(--md-blue); color: var(--white); border-radius: 999px; font-size: 0.75rem; font-weight: 700; padding: 0.1rem 0.5rem; }
+    .notif-item { background: var(--white); border: 1px solid var(--gray-20); border-radius: 6px; padding: 0.75rem 1rem; margin-bottom: 0.5rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .notif-item:last-child { margin-bottom: 0; }
+    .notif-item.terminal { border-left: 3px solid var(--md-green); }
+    .notif-item-body .notif-app { font-size: 0.8125rem; font-weight: 700; color: var(--gray-90); }
+    .notif-item-body .notif-stage { font-size: 0.875rem; color: var(--gray-70); margin-top: 0.2rem; }
+    .notif-item-body .notif-note { font-size: 0.8125rem; color: var(--gray-50); font-style: italic; margin-top: 0.2rem; }
+    .notif-item-body .notif-time { font-size: 0.75rem; color: var(--gray-50); margin-top: 0.25rem; }
+    .notif-dismiss { background: none; border: none; font-size: 1.1rem; color: var(--gray-50); cursor: pointer; padding: 0 0.25rem; line-height: 1; }
+    .notif-dismiss:hover { color: var(--gray-90); }
+    .btn-clear-notifs { background: none; border: none; font-size: 0.8rem; font-weight: 600; color: var(--md-blue); cursor: pointer; padding: 0; text-decoration: underline; }
+
+    /* Footer */
+    .site-footer { background: var(--white); border-top: 1px solid var(--gray-20); padding: 1rem 1.5rem; text-align: center; font-size: 0.8125rem; color: var(--gray-50); }
+
+    @media (max-width: 700px) {
+      .stat-tiles { grid-template-columns: repeat(2, 1fr); }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/portal/onestop-md.html" class="site-logo">
+    <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="44" style="height:44px;width:auto;" />
+  </a>
+  <div class="header-user" id="header-user"></div>
+</header>
+
+<main>
+  <div class="page-inner">
+
+    <!-- Notifications banner (populated by JS) -->
+    <div class="notif-banner" id="notif-banner"></div>
+
+    <div class="page-header">
+      <div>
+        <h1>My Applications</h1>
+        <p>Track the status of your submitted applications.</p>
+      </div>
+      <a href="/portal/onestop-md.html" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Start new application
+      </a>
+    </div>
+
+    <!-- Stat tiles -->
+    <div class="stat-tiles" id="stat-tiles"></div>
+
+    <!-- Application list -->
+    <div id="app-list-container"></div>
+
+  </div>
+</main>
+
+<footer class="site-footer">© 2024 State of Maryland &nbsp;·&nbsp; <a href="/portal/onestop-md.html">Home</a></footer>
+
+<script>
+const session = Auth.requireRole('resident');
+if (session) {
+  document.getElementById('header-user').innerHTML = `
+    <span>Signed in as <strong>${session.name}</strong></span>
+    <button class="btn-ghost" onclick="Auth.logout()">Sign out</button>
+  `;
+}
+
+function render() {
+  const subs = Submissions.byUser(session.userId);
+
+  // Stat tiles
+  const total      = subs.length;
+  const approved   = subs.filter(s => s.status === 'approved').length;
+  const pending    = subs.filter(s => ['submitted','under_review','info_needed'].includes(s.status)).length;
+  const infoNeeded = subs.filter(s => s.status === 'info_needed').length;
+
+  document.getElementById('stat-tiles').innerHTML = `
+    <div class="stat-tile highlight">
+      <div class="label">Total</div>
+      <div class="value">${total}</div>
+      <div class="sub">applications</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Pending</div>
+      <div class="value">${pending}</div>
+      <div class="sub">in progress</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Approved</div>
+      <div class="value">${approved}</div>
+      <div class="sub">completed</div>
+    </div>
+    <div class="stat-tile">
+      <div class="label">Info needed</div>
+      <div class="value">${infoNeeded}</div>
+      <div class="sub">action required</div>
+    </div>`;
+
+  const container = document.getElementById('app-list-container');
+
+  if (!subs.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <h2>No applications yet</h2>
+        <p>You haven't submitted any applications. Start your first one below.</p>
+        <a href="/portal/onestop-md.html" class="btn btn-primary">Start an application</a>
+      </div>`;
+    return;
+  }
+
+  // Sort newest first
+  const sorted = [...subs].sort((a,b) => new Date(b.submittedAt) - new Date(a.submittedAt));
+
+  container.innerHTML = `<div class="app-list">${sorted.map(sub => buildCard(sub)).join('')}</div>`;
+
+  // Toggle expand
+  document.querySelectorAll('.app-card').forEach(card => {
+    card.querySelector('.app-card-header').addEventListener('click', () => {
+      card.classList.toggle('expanded');
+    });
+  });
+}
+
+function buildCard(sub) {
+  const sc     = STATUS_COLORS[sub.status] || STATUS_COLORS.submitted;
+  const label  = STATUS_LABELS[sub.status] || sub.status;
+  const d      = sub.formData || {};
+
+  const address = [d.property_address, d.property_city, d.property_county].filter(Boolean).join(', ') || '—';
+
+  const timelineItems = (sub.timeline || []).map((t, i) => {
+    const isLast    = i === sub.timeline.length - 1;
+    const cls       = isLast ? 'current' : 'done';
+    const noteHtml  = t.note ? `<div class="timeline-note">"${t.note}"</div>` : '';
+    return `
+      <div class="timeline-item ${cls}">
+        <div class="timeline-dot"></div>
+        <div class="timeline-label">${t.label || STATUS_LABELS[t.status] || t.status}</div>
+        <div class="timeline-date">${formatDateTime(t.date)}</div>
+        ${noteHtml}
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="app-card" data-id="${sub.id}">
+      <div class="app-card-header">
+        <div class="app-card-title">
+          <div class="app-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <div class="app-name">${sub.formType}</div>
+            <div class="app-meta">
+              <span>Ref: ${sub.id}</span>
+              <span>Submitted ${formatDate(sub.submittedAt)}</span>
+              <span>${address}</span>
+            </div>
+          </div>
+        </div>
+        <span class="status-badge" style="background:${sc.bg};color:${sc.text};border-color:${sc.border};">${label}</span>
+      </div>
+
+      <div class="app-detail">
+        <div class="detail-grid" style="margin-top:1.25rem;">
+          <div class="detail-field"><div class="d-label">County</div><div class="d-value">${d.property_county || '—'}</div></div>
+          <div class="detail-field"><div class="d-label">Move-in date</div><div class="d-value">${formatDate(d.move_in_date)}</div></div>
+          <div class="detail-field"><div class="d-label">Last updated</div><div class="d-value">${formatDate(sub.updatedAt)}</div></div>
+        </div>
+      </div>
+
+      <div class="app-timeline">
+        <div class="timeline-heading">Application timeline</div>
+        <div class="timeline">${timelineItems}</div>
+      </div>
+    </div>`;
+}
+
+render();
+renderNotifications();
+
+// ── Cross-portal notification bridge ─────────────────────────────────────────
+// Reads from mos_permit_notifications written by the permit-platform admin app
+function getNotifications() {
+  try { return JSON.parse(localStorage.getItem('mos_permit_notifications') || '[]'); }
+  catch { return []; }
+}
+
+function saveNotifications(list) {
+  localStorage.setItem('mos_permit_notifications', JSON.stringify(list));
+}
+
+function dismissNotification(id) {
+  const list = getNotifications().filter(n => n.id !== id);
+  saveNotifications(list);
+  renderNotifications();
+}
+
+function clearAllNotifications() {
+  saveNotifications([]);
+  renderNotifications();
+}
+
+function renderNotifications() {
+  const all = getNotifications();
+  const banner = document.getElementById('notif-banner');
+  if (!banner) return;
+
+  if (!all.length) {
+    banner.classList.remove('has-notifs');
+    banner.innerHTML = '';
+    return;
+  }
+
+  banner.classList.add('has-notifs');
+
+  const items = all.map(n => {
+    const time = n.createdAt ? new Date(n.createdAt).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    const noteHtml = n.note ? `<div class="notif-note">"${n.note}"</div>` : '';
+    const terminalBadge = n.isTerminal
+      ? `<span style="font-size:0.75rem;color:var(--md-green);font-weight:700;"> ✓ Completed</span>`
+      : '';
+    return `
+      <div class="notif-item${n.isTerminal ? ' terminal' : ''}" data-id="${n.id}">
+        <div class="notif-item-body">
+          <div class="notif-app">Application ${n.applicationNumber}${terminalBadge}</div>
+          <div class="notif-stage">Moved to: <strong>${n.stageName}</strong></div>
+          ${noteHtml}
+          <div class="notif-time">${time}</div>
+        </div>
+        <button class="notif-dismiss" onclick="dismissNotification('${n.id}')" title="Dismiss">×</button>
+      </div>`;
+  }).join('');
+
+  banner.innerHTML = `
+    <div class="notif-banner-header">
+      <div class="notif-banner-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        Status Updates
+        <span class="notif-badge">${all.length}</span>
+      </div>
+      <button class="btn-clear-notifs" onclick="clearAllNotifications()">Clear all</button>
+    </div>
+    ${items}`;
+}
+
+// Poll for new notifications every 5 seconds (for same-origin tab updates)
+setInterval(renderNotifications, 5000);
+</script>
+</body>
+</html>
