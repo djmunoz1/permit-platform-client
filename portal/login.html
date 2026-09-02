@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
+  <script src="/portal/app.js"></script>
+  <style>
+    :root {
+      --md-navy: #1b2a4a; --md-navy-dark: #0f1e36;
+      --md-blue: #2378C3; --md-blue-dark: #1a5d9a;
+      --md-blue-light: #d9e8f6; --md-blue-lighter: #eff6fb;
+      --md-red: #BE0000; --md-gold: #F0B429;
+      --gray-5: #f8f8f8; --gray-10: #f0f0f0; --gray-20: #e6e6e6;
+      --gray-30: #c9c9c9; --gray-50: #757575; --gray-70: #454545;
+      --gray-90: #1b1b1b; --white: #ffffff;
+      --font-sans: 'Source Sans 3', sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--gray-5); color: var(--gray-90); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+    a { color: var(--md-blue); }
+
+    /* Header */
+    .site-header { background: var(--white); border-bottom: 1px solid var(--gray-20); padding: 0 1.5rem; height: 68px; display: flex; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .site-logo { display: flex; align-items: center; text-decoration: none; }
+
+    /* Main */
+    main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .login-card {
+      background: var(--white);
+      border: 1px solid var(--gray-20);
+      border-radius: 8px;
+      padding: 2.5rem 2rem;
+      width: 100%; max-width: 440px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .login-card h1 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.375rem; color: var(--gray-90); }
+    .login-card .sub { font-size: 0.9375rem; color: var(--gray-50); margin-bottom: 1.75rem; }
+
+    /* Form */
+    .field { margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.9375rem; font-weight: 600; color: var(--gray-90); margin-bottom: 0.375rem; }
+    input[type="email"], input[type="password"] {
+      width: 100%; border: 2px solid var(--gray-30); border-radius: 4px;
+      padding: 0.75rem 0.875rem; font: 1rem var(--font-sans); color: var(--gray-90);
+      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus { border-color: var(--md-blue); box-shadow: 0 0 0 3px rgba(35,120,195,0.2); }
+    .error-msg { color: var(--md-red); font-size: 0.875rem; margin-top: 0.375rem; display: none; }
+    .error-msg.show { display: block; }
+
+    .btn-primary {
+      width: 100%; background: var(--md-navy); color: var(--white);
+      border: none; border-radius: 4px; padding: 0.875rem 1.5rem;
+      font: 700 1rem var(--font-sans); cursor: pointer;
+      transition: background 0.15s; margin-top: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--md-navy-dark); }
+
+    .divider { border: none; border-top: 1px solid var(--gray-20); margin: 1.5rem 0; }
+
+    /* Demo accounts */
+    .demo-box { background: var(--md-blue-lighter); border: 1px solid var(--md-blue-light); border-radius: 6px; padding: 1rem 1.125rem; margin-top: 1.25rem; }
+    .demo-box h3 { font-size: 0.8125rem; font-weight: 700; color: var(--md-blue-dark); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.625rem; }
+    .demo-account { display: flex; justify-content: space-between; align-items: center; padding: 0.375rem 0; border-bottom: 1px solid var(--md-blue-light); font-size: 0.8125rem; }
+    .demo-account:last-child { border-bottom: none; }
+    .demo-account .creds { color: var(--gray-70); }
+    .demo-account .creds strong { color: var(--gray-90); }
+    .demo-btn { background: none; border: 1px solid var(--md-blue); border-radius: 4px; color: var(--md-blue); font: 600 0.75rem var(--font-sans); padding: 0.2rem 0.625rem; cursor: pointer; transition: background 0.15s; }
+    .demo-btn:hover { background: var(--md-blue); color: var(--white); }
+
+    /* Footer */
+    .site-footer { background: var(--white); border-top: 1px solid var(--gray-20); padding: 1rem 1.5rem; text-align: center; font-size: 0.8125rem; color: var(--gray-50); }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="/portal/onestop-md.html" class="site-logo">
+    <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="44" style="height:44px;width:auto;" />
+  </a>
+</header>
+
+<main>
+  <div class="login-card">
+    <h1>Sign in to OneStop</h1>
+    <p class="sub">Access your applications and account information.</p>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required />
+        <p class="error-msg" id="login-error">Invalid email or password. Please try again.</p>
+      </div>
+      <button type="submit" class="btn-primary">Sign in</button>
+    </form>
+
+    <div class="demo-box">
+      <h3>Demo accounts</h3>
+      <div class="demo-account">
+        <span class="creds"><strong>Resident:</strong> jane.doe@example.com / resident1</span>
+        <button class="demo-btn" onclick="fillDemo('jane.doe@example.com','resident1')">Use</button>
+      </div>
+      <div class="demo-account">
+        <span class="creds"><strong>Resident:</strong> john.smith@example.com / resident2</span>
+        <button class="demo-btn" onclick="fillDemo('john.smith@example.com','resident2')">Use</button>
+      </div>
+      <div class="demo-account">
+        <span class="creds"><strong>Admin:</strong> admin@maryland.gov / admin1234</span>
+        <button class="demo-btn" onclick="fillDemo('admin@maryland.gov','admin1234')">Use</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">© 2024 State of Maryland</footer>
+
+<script>
+  // Redirect already-logged-in users
+  const s = Auth.current();
+  if (s) window.location.href = s.role === 'admin' ? '/portal/admin-dashboard.html' : '/portal/my-applications.html';
+
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email    = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+    const session  = Auth.login(email, password);
+    if (!session) {
+      document.getElementById('login-error').classList.add('show');
+      return;
+    }
+    const next = new URLSearchParams(location.search).get('next') || '';
+    window.location.href = session.role === 'admin' ? '/portal/admin-dashboard.html' : (next || '/portal/my-applications.html');
+  });
+
+  function fillDemo(email, password) {
+    document.getElementById('email').value    = email;
+    document.getElementById('password').value = password;
+    document.getElementById('login-error').classList.remove('show');
+  }
+</script>
+</body>
+</html>

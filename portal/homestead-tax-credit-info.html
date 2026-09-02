@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homestead Tax Credit (HST) | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── MDWDS Tokens ── */
+    :root {
+      --md-navy:         #1b2a4a;
+      --md-navy-dark:    #0f1e36;
+      --md-blue:         #2378C3;
+      --md-blue-dark:    #1a5d9a;
+      --md-blue-light:   #d9e8f6;
+      --md-blue-lighter: #eff6fb;
+      --md-red:          #BE0000;
+      --md-gold:         #F0B429;
+      --md-gold-light:   #fef9e7;
+      --md-green:        #2e7d32;
+      --md-green-light:  #e8f5e9;
+      --md-teal:         #0071bc;
+      --md-teal-light:   #e0f0ff;
+      --md-purple:       #5c35a8;
+      --md-purple-light: #ede8f8;
+      --gray-5:   #f8f8f8;
+      --gray-10:  #f0f0f0;
+      --gray-20:  #e6e6e6;
+      --gray-30:  #c9c9c9;
+      --gray-50:  #757575;
+      --gray-70:  #454545;
+      --gray-90:  #1b1b1b;
+      --white:    #ffffff;
+      --font-sans:  'Source Sans 3', -apple-system, sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+      --max-width: 1240px;
+      --content-width: 820px;
+      --nav-h: 68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--gray-90); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: var(--md-blue); text-decoration: underline; }
+    a:hover { color: var(--md-blue-dark); }
+
+    /* ── Shared header ── */
+    .site-header { background: var(--white); border-bottom: 1px solid var(--gray-20); position: sticky; top: 0; z-index: 200; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .header-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; height: var(--nav-h); display: flex; align-items: center; gap: 2rem; }
+    .site-logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
+    .primary-nav { flex: 1; display: flex; align-items: center; }
+    .primary-nav ul { list-style: none; display: flex; align-items: center; gap: 0.25rem; }
+    .primary-nav a { display: flex; align-items: center; gap: 0.3rem; color: var(--gray-90); text-decoration: none; font-size: 0.9375rem; font-weight: 600; padding: 0.5rem 0.75rem; border-radius: 4px; transition: background 0.15s; white-space: nowrap; }
+    .primary-nav a:hover { background: var(--gray-10); color: var(--gray-90); }
+    .chevron { width: 14px; height: 14px; opacity: 0.6; }
+    .header-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .lang-btn { display: flex; align-items: center; gap: 0.3rem; color: var(--gray-70); background: none; border: none; font: 0.9375rem/1 var(--font-sans); cursor: pointer; padding: 0.5rem 0.625rem; border-radius: 4px; transition: background 0.15s; }
+    .lang-btn:hover { background: var(--gray-10); }
+    .lang-btn svg { width: 18px; height: 18px; }
+    .sign-in-btn { display: inline-flex; align-items: center; padding: 0.5rem 1.25rem; border: 2px solid var(--md-navy); border-radius: 4px; color: var(--md-navy); background: transparent; font: 600 0.9375rem/1 var(--font-sans); text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+    .sign-in-btn:hover { background: var(--md-navy); color: var(--white); }
+
+    /* ── Breadcrumb ── */
+    .breadcrumb { border-bottom: 1px solid var(--gray-10); padding: 0.75rem 1.5rem; }
+    .breadcrumb-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; flex-wrap: wrap; }
+    .breadcrumb a { color: var(--gray-70); text-decoration: none; display: flex; align-items: center; gap: 0.375rem; }
+    .breadcrumb a:hover { color: var(--md-blue); text-decoration: underline; }
+    .breadcrumb a svg { width: 15px; height: 15px; }
+    .breadcrumb-sep { color: var(--gray-30); }
+    .breadcrumb-sep svg { width: 14px; height: 14px; display: block; }
+    .breadcrumb-current { color: var(--gray-70); font-weight: 600; }
+
+    /* ── Page hero ── */
+    .page-hero { padding: 2.5rem 1.5rem 0; }
+    .page-hero-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1fr 400px; gap: 3rem; align-items: start; }
+
+    .hero-left { padding-bottom: 2.5rem; }
+    .page-title-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+    .page-icon { width: 60px; height: 60px; flex-shrink: 0; background: var(--md-green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--md-green); }
+    .page-icon svg { width: 30px; height: 30px; }
+    .page-hero h1 { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 900; color: var(--gray-90); line-height: 1.15; letter-spacing: -0.02em; }
+    .audience-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; background: var(--md-green-light); border: 1px solid #a8d5ab; border-radius: 999px; font-size: 0.8125rem; font-weight: 700; color: var(--md-green); margin-bottom: 1rem; }
+    .page-hero .body-text { font-size: 1rem; color: var(--gray-70); line-height: 1.7; margin-bottom: 0.875rem; }
+    .learn-link { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.9375rem; font-weight: 700; color: var(--md-blue); text-decoration: none; }
+    .learn-link:hover { text-decoration: underline; }
+    .learn-link svg { width: 16px; height: 16px; }
+
+    /* Right: illustration + before-you-apply card */
+    .hero-right { display: flex; flex-direction: column; }
+    .hero-photo { width: 100%; height: 200px; border-radius: 12px 12px 0 0; overflow: hidden; }
+    .hero-photo svg { width: 100%; height: 100%; display: block; }
+    .before-card { background: var(--white); border: 1px solid var(--gray-20); border-radius: 0 0 12px 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); padding: 1.375rem 1.5rem 1.5rem; }
+    .before-card h2 { font-size: 1.0625rem; font-weight: 700; color: var(--gray-90); margin-bottom: 1rem; }
+    .prereq-list { list-style: none; display: flex; flex-direction: column; gap: 0.875rem; margin-bottom: 1.25rem; }
+    .prereq-item { display: flex; align-items: flex-start; gap: 0.875rem; }
+    .prereq-check { width: 24px; height: 24px; flex-shrink: 0; color: var(--md-green); margin-top: 1px; }
+    .prereq-check svg { width: 24px; height: 24px; }
+    .prereq-body strong { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.125rem; }
+    .prereq-body p { font-size: 0.875rem; color: var(--gray-70); line-height: 1.4; }
+    .prereq-icon { width: 28px; height: 28px; flex-shrink: 0; color: var(--gray-50); margin-top: 1px; }
+    .prereq-icon svg { width: 28px; height: 28px; }
+    .elig-link { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; font-weight: 700; color: var(--md-blue); text-decoration: none; }
+    .elig-link:hover { text-decoration: underline; }
+    .elig-link svg { width: 14px; height: 14px; }
+
+    /* ── Apply or Register ── */
+    .apply-section { padding: 3rem 1.5rem; background: var(--white); }
+    .apply-inner { max-width: var(--max-width); margin: 0 auto; }
+    .apply-inner .section-header { margin-bottom: 1.5rem; }
+    .section-header h2 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.25rem; }
+    .section-header p { font-size: 0.9375rem; color: var(--gray-50); }
+
+    .apply-options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .apply-option { border: 1px solid var(--gray-20); border-radius: 8px; padding: 1.5rem; background: var(--white); display: flex; flex-direction: column; gap: 1rem; }
+    .apply-option-top { display: flex; align-items: center; gap: 1rem; }
+    .apply-option-icon { width: 48px; height: 48px; flex-shrink: 0; color: var(--gray-50); }
+    .apply-option-icon svg { width: 48px; height: 48px; }
+    .apply-option h3 { font-size: 1rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.125rem; }
+    .apply-option p { font-size: 0.875rem; color: var(--gray-70); }
+    .btn-apply-online { display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.5rem; background: var(--md-navy); color: var(--white); border: none; border-radius: 4px; font: 700 1rem var(--font-sans); cursor: pointer; text-decoration: none; transition: background 0.15s; align-self: flex-start; }
+    .btn-apply-online:hover { background: var(--md-navy-dark); color: var(--white); }
+    .btn-download { display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.5rem; background: var(--md-green); color: var(--white); border: none; border-radius: 4px; font: 700 1rem var(--font-sans); cursor: pointer; text-decoration: none; transition: background 0.15s; align-self: flex-start; }
+    .btn-download:hover { background: #1e5c23; color: var(--white); }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.375rem; }
+    .check-list li { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--gray-70); }
+    .check-list li::before { content: ''; width: 16px; height: 16px; flex-shrink: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%232e7d32' stroke-width='2.5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size: contain; background-repeat: no-repeat; }
+
+    .need-help-row { border: 1px solid var(--gray-20); border-radius: 8px; padding: 1.125rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .need-help-icon { width: 36px; height: 36px; flex-shrink: 0; background: var(--md-purple-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--md-purple); }
+    .need-help-icon svg { width: 18px; height: 18px; }
+    .need-help-body { flex: 1; }
+    .need-help-body strong { font-size: 0.9375rem; font-weight: 700; color: var(--gray-90); }
+    .need-help-body p { font-size: 0.875rem; color: var(--gray-70); }
+    .visit-help-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.875rem; font-weight: 700; color: var(--md-blue); text-decoration: none; white-space: nowrap; }
+    .visit-help-link:hover { text-decoration: underline; }
+    .visit-help-link svg { width: 14px; height: 14px; }
+
+    /* ── Resources ── */
+    .resources-section { padding: 0 1.5rem 3rem; }
+    .resources-inner { max-width: var(--max-width); margin: 0 auto; }
+    .resource-list { display: flex; flex-direction: column; border: 1px solid var(--gray-20); border-radius: 8px; overflow: hidden; }
+    .resource-row { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.375rem; border-bottom: 1px solid var(--gray-10); text-decoration: none; color: var(--gray-90); background: var(--white); transition: background 0.15s; }
+    .resource-row:last-child { border-bottom: none; }
+    .resource-row:hover { background: var(--gray-5); }
+    .resource-icon { width: 36px; height: 36px; flex-shrink: 0; background: var(--md-teal-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--md-teal); }
+    .resource-icon svg { width: 18px; height: 18px; }
+    .resource-body { flex: 1; }
+    .resource-body strong { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--md-blue); margin-bottom: 0.125rem; }
+    .resource-body p { font-size: 0.875rem; color: var(--gray-70); }
+    .resource-chevron { color: var(--gray-30); flex-shrink: 0; }
+    .resource-chevron svg { width: 18px; height: 18px; display: block; }
+
+    /* ── Agency / Contact ── */
+    .agency-section { padding: 0 1.5rem 3rem; }
+    .agency-inner { max-width: var(--max-width); margin: 0 auto; }
+    .agency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .agency-card { border: 1px solid var(--gray-20); border-radius: 8px; padding: 1.375rem 1.5rem; background: var(--white); display: flex; align-items: flex-start; gap: 1rem; }
+    .agency-card-icon { width: 44px; height: 44px; flex-shrink: 0; background: var(--md-purple-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--md-purple); }
+    .agency-card-icon svg { width: 22px; height: 22px; }
+    .agency-card-body strong { display: block; font-size: 0.9375rem; font-weight: 700; color: var(--gray-90); margin-bottom: 0.375rem; }
+    .agency-card-body p { font-size: 0.875rem; color: var(--gray-70); margin-bottom: 0.25rem; }
+    .agency-card-body a { font-size: 0.875rem; }
+    .contact-card-icon { background: var(--md-blue-light); color: var(--md-blue); }
+    .more-contact-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.875rem; font-weight: 700; color: var(--md-blue); text-decoration: none; margin-top: 0.25rem; }
+    .more-contact-link:hover { text-decoration: underline; }
+    .more-contact-link svg { width: 14px; height: 14px; }
+
+    .privacy-row { border: 1px solid var(--gray-20); border-radius: 8px; padding: 1.125rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+    .privacy-icon { width: 40px; height: 40px; flex-shrink: 0; background: var(--md-green-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--md-green); }
+    .privacy-icon svg { width: 20px; height: 20px; }
+    .privacy-body { flex: 1; }
+    .privacy-body strong { font-size: 0.9375rem; font-weight: 700; color: var(--gray-90); }
+    .privacy-body p { font-size: 0.875rem; color: var(--gray-70); }
+    .privacy-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.875rem; font-weight: 700; color: var(--md-blue); text-decoration: none; white-space: nowrap; }
+    .privacy-link:hover { text-decoration: underline; }
+    .privacy-link svg { width: 14px; height: 14px; }
+
+    /* ── Footer ── */
+    .site-footer { background: var(--white); border-top: 2px solid var(--gray-20); padding: 1.25rem 1.5rem; }
+    .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { color: var(--gray-70); text-decoration: none; font-size: 0.875rem; }
+    .footer-links a:hover { color: var(--md-blue); text-decoration: underline; }
+    .footer-copy { font-size: 0.8125rem; color: var(--gray-50); }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .page-hero-inner { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .apply-options { grid-template-columns: 1fr; }
+      .agency-grid { grid-template-columns: 1fr; }
+      .primary-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/portal/onestop-md.html" class="site-logo" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="48" style="height:48px;width:auto;" />
+    </a>
+    <nav class="primary-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#">Browse Services <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">For Business <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">For Residents <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">Help &amp; Resources <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <button class="lang-btn" aria-label="Select language">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        English
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <a href="/portal/login.html" class="sign-in-btn">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── Breadcrumb ── -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/portal/onestop-md.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Home</a>
+    <span class="breadcrumb-sep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+    <a href="/portal/housing-help.html">Find financial help</a>
+    <span class="breadcrumb-sep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+    <a href="/portal/housing-help.html">Housing</a>
+    <span class="breadcrumb-sep" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+    <span class="breadcrumb-current" aria-current="page">Homestead Tax Credit (HST)</span>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ── Hero ── -->
+  <section class="page-hero" aria-labelledby="page-heading">
+    <div class="page-hero-inner">
+
+      <div class="hero-left">
+        <div class="page-title-row">
+          <div class="page-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h1 id="page-heading">Homestead Tax Credit Eligibility Application (HST)</h1>
+        </div>
+        <div class="audience-badge">For Homeowners</div>
+
+        <p class="body-text">Maryland requires all homeowners to submit a one-time application to establish eligibility for the Homestead Tax Credit.</p>
+        <p class="body-text">The credit is applied automatically to your property taxes each year after you're approved.</p>
+
+        <a href="#" class="learn-link">
+          Learn more about the Homestead Tax Credit
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-photo" aria-hidden="true">
+          <!-- House + neighborhood illustration -->
+          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <defs>
+              <linearGradient id="isky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#d0e8f4"/>
+                <stop offset="100%" stop-color="#e8f4f8"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="200" fill="url(#isky)"/>
+            <!-- Ground -->
+            <rect x="0" y="155" width="400" height="45" fill="#88c060"/>
+            <!-- Main house -->
+            <rect x="100" y="95" width="140" height="65" fill="#8aba78"/>
+            <rect x="100" y="110" width="140" height="2" fill="#7aaa68" opacity="0.4"/>
+            <rect x="100" y="125" width="140" height="2" fill="#7aaa68" opacity="0.4"/>
+            <rect x="100" y="140" width="140" height="2" fill="#7aaa68" opacity="0.4"/>
+            <polygon points="88,97 170,45 252,97" fill="#5a7a3a"/>
+            <!-- Chimney -->
+            <rect x="200" y="55" width="16" height="34" fill="#8a6a4a"/>
+            <rect x="198" y="52" width="20" height="6" fill="#7a5a3a"/>
+            <!-- Windows main house -->
+            <rect x="114" y="103" width="36" height="28" rx="2" fill="#a8d0e8" opacity="0.9"/>
+            <line x1="132" y1="103" x2="132" y2="131" stroke="#88b8d4" stroke-width="1.5"/>
+            <line x1="114" y1="117" x2="150" y2="117" stroke="#88b8d4" stroke-width="1.5"/>
+            <rect x="200" y="103" width="36" height="28" rx="2" fill="#a8d0e8" opacity="0.9"/>
+            <line x1="218" y1="103" x2="218" y2="131" stroke="#88b8d4" stroke-width="1.5"/>
+            <line x1="200" y1="117" x2="236" y2="117" stroke="#88b8d4" stroke-width="1.5"/>
+            <!-- Door main -->
+            <rect x="152" y="120" width="36" height="40" rx="2" fill="#5a3a1a"/>
+            <circle cx="182" cy="140" r="3" fill="#c8a020"/>
+            <!-- Small house right -->
+            <rect x="278" y="110" width="90" height="50" fill="#9aca88"/>
+            <polygon points="270,112 323,72 376,112" fill="#6a8a4a"/>
+            <rect x="288" y="118" width="24" height="20" rx="1" fill="#a8d0e8" opacity="0.85"/>
+            <line x1="300" y1="118" x2="300" y2="138" stroke="#88b8d4" stroke-width="1"/>
+            <line x1="288" y1="128" x2="312" y2="128" stroke="#88b8d4" stroke-width="1"/>
+            <rect x="328" y="122" width="28" height="38" rx="2" fill="#5a3a1a"/>
+            <!-- Trees -->
+            <rect x="42" y="118" width="7" height="40" fill="#5a3a1a"/>
+            <ellipse cx="45" cy="108" rx="20" ry="25" fill="#4a8a30"/>
+            <ellipse cx="45" cy="96" rx="14" ry="18" fill="#5a9a38"/>
+            <rect x="262" y="122" width="6" height="36" fill="#5a3a1a"/>
+            <ellipse cx="265" cy="113" rx="16" ry="20" fill="#5a9030"/>
+            <!-- Clouds -->
+            <ellipse cx="60" cy="35" rx="35" ry="14" fill="white" opacity="0.85"/>
+            <ellipse cx="85" cy="28" rx="26" ry="12" fill="white" opacity="0.9"/>
+            <ellipse cx="310" cy="28" rx="32" ry="13" fill="white" opacity="0.8"/>
+            <ellipse cx="335" cy="22" rx="22" ry="10" fill="white" opacity="0.85"/>
+            <!-- Sun -->
+            <circle cx="360" cy="30" rx="18" r="18" fill="#f8e060" opacity="0.85"/>
+          </svg>
+        </div>
+
+        <div class="before-card">
+          <h2>Before you apply</h2>
+          <ul class="prereq-list" aria-label="Prerequisites">
+            <li class="prereq-item">
+              <div class="prereq-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              </div>
+              <div class="prereq-body">
+                <strong>You must own and live in your home</strong>
+                <p>The credit is for your principal residence only.</p>
+              </div>
+            </li>
+            <li class="prereq-item">
+              <div class="prereq-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div class="prereq-body">
+                <strong>It's a one-time application</strong>
+                <p>Once approved, you'll receive the credit each year automatically.</p>
+              </div>
+            </li>
+            <li class="prereq-item">
+              <div class="prereq-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="prereq-body">
+                <strong>Have your information ready</strong>
+                <p>You may need your property address, Social Security number, and income details.</p>
+              </div>
+            </li>
+          </ul>
+          <a href="#" class="elig-link">
+            Check eligibility requirements
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Apply or Register ── -->
+  <section class="apply-section" aria-labelledby="apply-heading">
+    <div class="apply-inner">
+      <div class="section-header">
+        <h2 id="apply-heading">Apply or Register</h2>
+        <p>Choose the option that works best for you.</p>
+      </div>
+
+      <div class="apply-options">
+        <!-- Online -->
+        <div class="apply-option">
+          <div class="apply-option-top">
+            <div class="apply-option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div>
+              <h3>Apply online</h3>
+              <p>Complete the application online.</p>
+            </div>
+          </div>
+          <a href="/portal/homestead-tax-credit.html" class="btn-apply-online">Apply online</a>
+          <ul class="check-list" aria-label="Online benefits">
+            <li>Fast and secure</li>
+            <li>Save your progress</li>
+            <li>Get confirmation right away</li>
+          </ul>
+        </div>
+
+        <!-- Download -->
+        <div class="apply-option">
+          <div class="apply-option-top">
+            <div class="apply-option-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+            </div>
+            <div>
+              <h3>Download form</h3>
+              <p>Download, print, and mail your completed application.</p>
+            </div>
+          </div>
+          <a href="#" class="btn-download">Download form</a>
+          <ul class="check-list" aria-label="Download benefits">
+            <li>Print and complete at your convenience</li>
+            <li>Mail to the address on the form</li>
+            <li>Allow extra time for processing</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Need help choosing -->
+      <div class="need-help-row">
+        <div class="need-help-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="need-help-body">
+          <strong>Need help choosing?</strong>
+          <p>If you're not sure which option is right for you, visit our Help Center or call us.</p>
+        </div>
+        <a href="#" class="visit-help-link">
+          Visit Help Center
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Resources and links ── -->
+  <section class="resources-section" aria-labelledby="resources-heading">
+    <div class="resources-inner">
+      <div class="section-header" style="margin-bottom:1.25rem;">
+        <h2 id="resources-heading">Resources and links</h2>
+        <p>Helpful information to guide you.</p>
+      </div>
+      <div class="resource-list">
+        <a href="#" class="resource-row">
+          <div class="resource-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div class="resource-body">
+            <strong>Schedule an in-person service appointment</strong>
+            <p>Get help from a staff member.</p>
+          </div>
+          <span class="resource-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+        </a>
+        <a href="#" class="resource-row">
+          <div class="resource-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="resource-body">
+            <strong>Homestead Tax Credit Eligibility Application – Spanish Translation</strong>
+            <p>Descargar en español</p>
+          </div>
+          <span class="resource-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Agency / Contact ── -->
+  <section class="agency-section" aria-labelledby="agency-heading">
+    <div class="agency-inner">
+      <div class="section-header" style="margin-bottom:1.25rem;">
+        <h2 id="agency-heading">Agency / Contact</h2>
+        <p>Questions about this application?</p>
+      </div>
+      <div class="agency-grid">
+        <div class="agency-card">
+          <div class="agency-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="agency-card-body">
+            <strong>Who issues this form?</strong>
+            <p>Maryland Department of Assessments and Taxation</p>
+            <a href="https://dat.maryland.gov" target="_blank" rel="noopener">dat.maryland.gov ↗</a>
+          </div>
+        </div>
+        <div class="agency-card">
+          <div class="agency-card-icon contact-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="agency-card-body">
+            <strong>Contact information</strong>
+            <p>Email: <a href="mailto:dat.homestead@maryland.gov">dat.homestead@maryland.gov</a></p>
+            <p>Phone: 410-767-1773</p>
+            <a href="#" class="more-contact-link">More ways to contact us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="privacy-row">
+        <div class="privacy-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="privacy-body">
+          <strong>Your information is private and secure.</strong>
+          <p>We protect your personal information and use it only to process your application.</p>
+        </div>
+        <a href="#" class="privacy-link">
+          Learn about privacy
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── Footer ── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="/portal/onestop-md.html" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="40" style="height:40px;width:auto;" />
+    </a>
+    <nav aria-label="Footer navigation">
+      <ul class="footer-links">
+        <li><a href="#">Privacy</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Terms of Use</a></li>
+        <li><a href="#">Site Map</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </nav>
+    <span class="footer-copy">© 2024 State of Maryland</span>
+  </div>
+</footer>
+
+</body>
+</html>

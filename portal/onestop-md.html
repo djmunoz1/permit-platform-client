@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────────
+       Maryland Web Design System Tokens
+    ───────────────────────────────────────────── */
+    :root {
+      --md-navy:         #1b2a4a;
+      --md-navy-dark:    #0f1e36;
+      --md-blue:         #2378C3;
+      --md-blue-dark:    #1a5d9a;
+      --md-blue-light:   #d9e8f6;
+      --md-blue-lighter: #eff6fb;
+      --md-red:          #BE0000;
+      --md-gold:         #F0B429;
+      --md-green:        #2e7d32;
+      --md-green-light:  #e8f5e9;
+      --md-teal:         #0071bc;
+      --md-teal-light:   #e0f0ff;
+      --md-purple:       #5c35a8;
+      --md-purple-light: #ede8f8;
+      --md-orange:       #c04a00;
+      --md-orange-light: #fdf0e8;
+
+      --gray-5:   #f8f8f8;
+      --gray-10:  #f0f0f0;
+      --gray-20:  #e6e6e6;
+      --gray-30:  #c9c9c9;
+      --gray-50:  #757575;
+      --gray-70:  #454545;
+      --gray-90:  #1b1b1b;
+      --white:    #ffffff;
+
+      --font-sans:  'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+
+      --max-width: 1240px;
+      --nav-h: 68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--gray-90);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--md-blue); text-decoration: underline; }
+    a:hover { color: var(--md-blue-dark); }
+
+    /* ── Skip nav ── */
+    .skip-nav {
+      position: absolute; top: -100%; left: 1rem; z-index: 9999;
+      background: var(--md-navy); color: var(--white);
+      padding: 0.5rem 1rem; border-radius: 4px; font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-nav:focus { top: 0.5rem; }
+
+    /* ─────────────────────────────────────────────
+       HEADER / NAV
+    ───────────────────────────────────────────── */
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-20);
+      position: sticky; top: 0; z-index: 200;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    /* Logo */
+    .site-logo {
+      display: flex; align-items: center; gap: 0.625rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+
+    /* Primary nav */
+    .primary-nav {
+      flex: 1;
+      display: flex; align-items: center;
+    }
+    .primary-nav ul {
+      list-style: none;
+      display: flex; align-items: center; gap: 0.25rem;
+    }
+    .primary-nav a {
+      display: flex; align-items: center; gap: 0.3rem;
+      color: var(--gray-90); text-decoration: none;
+      font-size: 0.9375rem; font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      border-radius: 4px;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .primary-nav a:hover { background: var(--gray-10); color: var(--gray-90); }
+    .primary-nav .chevron {
+      width: 14px; height: 14px; opacity: 0.6;
+    }
+
+    /* Header right */
+    .header-right {
+      display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
+    }
+    .lang-btn {
+      display: flex; align-items: center; gap: 0.3rem;
+      color: var(--gray-70); background: none; border: none;
+      font: 0.9375rem/1 var(--font-sans); cursor: pointer;
+      padding: 0.5rem 0.625rem; border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .lang-btn:hover { background: var(--gray-10); }
+    .lang-btn svg { width: 18px; height: 18px; }
+    .sign-in-btn {
+      display: inline-flex; align-items: center;
+      padding: 0.5rem 1.25rem;
+      border: 2px solid var(--md-navy);
+      border-radius: 4px;
+      color: var(--md-navy); background: transparent;
+      font: 600 0.9375rem/1 var(--font-sans);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .sign-in-btn:hover { background: var(--md-navy); color: var(--white); }
+
+    /* ─────────────────────────────────────────────
+       HERO SPLIT SECTION
+    ───────────────────────────────────────────── */
+    .hero {
+      background: var(--white);
+      overflow: hidden;
+    }
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      min-height: 480px;
+      gap: 2rem;
+    }
+
+    /* Left */
+    .hero-left { padding: 3.5rem 0 3.5rem; }
+    .hero-headline {
+      font-family: var(--font-serif);
+      font-size: clamp(2.25rem, 4vw, 3.25rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--gray-90);
+      margin-bottom: 1rem;
+    }
+    .hero-headline .accent { color: var(--md-red); }
+    .hero-subtext {
+      font-size: 1.0625rem;
+      color: var(--gray-70);
+      margin-bottom: 1.75rem;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    /* Search */
+    .search-wrap {
+      display: flex;
+      border: 2px solid var(--gray-30);
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 540px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .search-wrap:focus-within {
+      border-color: var(--md-blue);
+      box-shadow: 0 0 0 3px rgba(35,120,195,0.2);
+    }
+    .search-wrap .search-icon {
+      display: flex; align-items: center; padding: 0 0.875rem;
+      color: var(--gray-50); background: var(--white); border: none;
+    }
+    .search-wrap .search-icon svg { width: 20px; height: 20px; }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font: 1rem var(--font-sans); color: var(--gray-90);
+      padding: 0.875rem 0.5rem;
+      background: var(--white);
+    }
+    .search-input::placeholder { color: var(--gray-50); }
+    .search-btn {
+      background: var(--md-navy); color: var(--white);
+      border: none; padding: 0 1.5rem;
+      font: 700 1rem var(--font-sans);
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .search-btn:hover { background: var(--md-navy-dark); }
+
+    /* Popular searches */
+    .popular {
+      margin-top: 1rem;
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .popular-label {
+      font-size: 0.8125rem; color: var(--gray-50); font-weight: 600;
+      white-space: nowrap;
+    }
+    .pill {
+      display: inline-block;
+      padding: 0.3rem 0.875rem;
+      border: 1px solid var(--gray-30);
+      border-radius: 999px;
+      font-size: 0.8125rem; color: var(--gray-70);
+      text-decoration: none; background: var(--white);
+      transition: border-color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .pill:hover { border-color: var(--md-blue); background: var(--md-blue-lighter); color: var(--md-blue); }
+
+    /* Right — image with rounded clip */
+    .hero-right {
+      position: relative;
+      display: flex; align-items: stretch;
+      height: 100%;
+      min-height: 420px;
+    }
+    .hero-img-wrap {
+      width: 100%;
+      border-radius: 50% 0 0 50%;
+      overflow: hidden;
+      background: var(--md-blue-lighter);
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    /* Annapolis State House placeholder if no image */
+    .hero-img-placeholder {
+      width: 100%; height: 100%;
+      min-height: 420px;
+      background: linear-gradient(160deg, #c8ddf0 0%, #a8c4e0 40%, #8aadcc 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #5a7a99; font-size: 0.875rem;
+      position: relative; overflow: hidden;
+    }
+    /* Stylized Annapolis building SVG will be inlined */
+
+    /* ─────────────────────────────────────────────
+       GOAL CARDS SECTION
+    ───────────────────────────────────────────── */
+    .goals-section {
+      padding: 3.5rem 1.5rem;
+      background: var(--white);
+    }
+    .goals-section h2 {
+      text-align: center;
+      font-family: var(--font-serif);
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--gray-90);
+      margin-bottom: 0.375rem;
+    }
+    .goals-section .subhead {
+      text-align: center;
+      font-size: 0.9375rem;
+      color: var(--gray-50);
+      margin-bottom: 2rem;
+    }
+    .goals-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    .goal-card {
+      display: flex; flex-direction: column;
+      padding: 1.5rem 1.25rem 1.25rem;
+      border: 1px solid var(--gray-20);
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--gray-90);
+      background: var(--white);
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+      position: relative;
+    }
+    .goal-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border-color: var(--gray-30);
+      transform: translateY(-2px);
+      color: var(--gray-90);
+    }
+    .goal-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+    .goal-icon svg { width: 24px; height: 24px; }
+    .goal-card h3 {
+      font-size: 1rem; font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+      color: var(--gray-90);
+    }
+    .goal-card p {
+      font-size: 0.875rem; color: var(--gray-50);
+      line-height: 1.5; flex: 1;
+    }
+    .goal-arrow {
+      margin-top: 1.25rem;
+      color: var(--md-blue);
+    }
+    .goal-arrow svg { width: 20px; height: 20px; }
+
+    /* Icon color themes */
+    .icon-green  { background: var(--md-green-light);  color: var(--md-green); }
+    .icon-blue   { background: var(--md-teal-light);   color: var(--md-teal); }
+    .icon-gold   { background: #fef9e7;                color: #b7860b; }
+    .icon-navy   { background: #e8edf5;                color: var(--md-navy); }
+    .icon-orange { background: var(--md-orange-light); color: var(--md-orange); }
+
+    /* ─────────────────────────────────────────────
+       TRUST / HELP BANNER
+    ───────────────────────────────────────────── */
+    .info-banner {
+      background: var(--gray-5);
+      border-top: 1px solid var(--gray-20);
+      padding: 1.75rem 1.5rem;
+      position: relative; overflow: hidden;
+    }
+    .info-banner-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .info-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .info-item-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--md-navy);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+    }
+    .info-item-icon svg { width: 20px; height: 20px; }
+    .info-item-body { flex: 1; }
+    .info-item-body strong {
+      display: block; font-size: 0.9375rem; font-weight: 700;
+      color: var(--gray-90); margin-bottom: 0.25rem;
+    }
+    .info-item-body p {
+      font-size: 0.875rem; color: var(--md-blue); line-height: 1.4;
+    }
+
+    .info-divider {
+      width: 1px; background: var(--gray-20); align-self: stretch;
+      /* hidden, division implied by grid gap */
+    }
+
+    .help-item { padding-left: 0; }
+    .help-item strong { color: var(--gray-90); }
+    .help-item p { color: var(--gray-70); margin-bottom: 0.5rem; }
+    .help-link {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.875rem; font-weight: 700; color: var(--md-blue);
+      text-decoration: none;
+    }
+    .help-link:hover { text-decoration: underline; }
+    .help-link svg { width: 14px; height: 14px; }
+
+    /* Decorative MD mark (bottom right of banner) */
+    .banner-deco {
+      position: absolute; right: -1rem; bottom: -1.5rem;
+      opacity: 0.07; pointer-events: none;
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────── */
+    .site-footer {
+      background: var(--md-navy);
+      color: rgba(255,255,255,0.8);
+      padding: 2.5rem 1.5rem 1.5rem;
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 0.625rem;
+      text-decoration: none; color: var(--white);
+      font-weight: 700; font-size: 1.0625rem;
+    }
+    .footer-links {
+      display: flex; gap: 2rem; list-style: none; flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-size: 0.875rem; transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .goals-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 860px) {
+      .hero-inner { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { display: none; }
+      .hero-left { padding: 2.5rem 0; }
+      .goals-grid { grid-template-columns: repeat(2, 1fr); }
+      .info-banner-inner { grid-template-columns: 1fr; }
+      .primary-nav { display: none; }
+    }
+    @media (max-width: 480px) {
+      .goals-grid { grid-template-columns: 1fr; }
+      .search-btn span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-nav" href="#main">Skip to main content</a>
+
+<!-- ──────────────────── HEADER ──────────────────── -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+
+    <!-- Logo -->
+    <a href="/" class="site-logo" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="48" style="height:48px;width:auto;" />
+    </a>
+
+    <!-- Primary Nav -->
+    <nav class="primary-nav" aria-label="Main navigation">
+      <ul>
+        <li>
+          <a href="#">Browse Services
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#">For Business
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#">For Residents
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="#">Help &amp; Resources
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Right actions -->
+    <div class="header-right">
+      <button class="lang-btn" aria-label="Select language: English">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        English
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <a href="/portal/login.html" class="sign-in-btn">Sign in</a>
+    </div>
+
+  </div>
+</header>
+
+<!-- ──────────────────── MAIN ──────────────────── -->
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-inner">
+
+      <!-- Left: text + search -->
+      <div class="hero-left">
+        <h1 class="hero-headline" id="hero-heading">
+          All of Maryland.<br>
+          <span class="accent">All in one place.</span>
+        </h1>
+        <p class="hero-subtext">
+          OneStop is your way to find and access licenses, permits,
+          applications, grants, tax credits, and more.
+        </p>
+
+        <form class="search-wrap" role="search" action="/search" method="get">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+          </span>
+          <input
+            class="search-input"
+            type="search"
+            name="q"
+            placeholder="What are you looking to do?"
+            aria-label="Search Maryland services"
+          />
+          <button class="search-btn" type="submit">
+            <span>Search</span>
+          </button>
+        </form>
+
+        <div class="popular" aria-label="Popular searches">
+          <span class="popular-label">Popular searches:</span>
+          <a class="pill" href="/search?q=renew+drivers+license">Renew driver's license</a>
+          <a class="pill" href="/search?q=start+a+business">Start a business</a>
+          <a class="pill" href="/search?q=build+a+deck">Build a deck</a>
+          <a class="pill" href="/search?q=tax+credit">Tax credit</a>
+          <a class="pill" href="/search?q=electrician+license">Electrician license</a>
+        </div>
+      </div>
+
+      <!-- Right: Annapolis image with rounded left clip -->
+      <div class="hero-right" aria-hidden="true">
+        <div class="hero-img-wrap">
+          <!-- Stylized Annapolis State House illustration (SVG) -->
+          <svg viewBox="0 0 600 480" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <!-- Sky gradient -->
+            <defs>
+              <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#d6e8f5"/>
+                <stop offset="100%" stop-color="#f0f7fc"/>
+              </linearGradient>
+              <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#b8d4e8"/>
+                <stop offset="100%" stop-color="#8ab6d0"/>
+              </linearGradient>
+              <linearGradient id="trees" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4a7c3f"/>
+                <stop offset="100%" stop-color="#2e5426"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Sky -->
+            <rect width="600" height="480" fill="url(#sky)"/>
+
+            <!-- Distant tree line -->
+            <ellipse cx="80"  cy="230" rx="60" ry="45" fill="#5a8f4e" opacity="0.7"/>
+            <ellipse cx="160" cy="220" rx="75" ry="55" fill="#4a7c3f" opacity="0.8"/>
+            <ellipse cx="260" cy="215" rx="85" ry="60" fill="#3d6e33" opacity="0.75"/>
+            <ellipse cx="380" cy="220" rx="70" ry="50" fill="#4a7c3f" opacity="0.7"/>
+            <ellipse cx="470" cy="225" rx="80" ry="55" fill="#5a8f4e" opacity="0.65"/>
+            <ellipse cx="560" cy="218" rx="65" ry="48" fill="#3d6e33" opacity="0.7"/>
+
+            <!-- Ground base -->
+            <rect x="0" y="260" width="600" height="220" fill="#c8b890"/>
+
+            <!-- Main State House building body -->
+            <rect x="160" y="190" width="280" height="120" fill="#c8b89a"/>
+            <!-- Columns facade -->
+            <rect x="220" y="195" width="160" height="115" fill="#d4c4a8"/>
+            <!-- Column lines -->
+            <rect x="230" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="248" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="266" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="284" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="302" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="320" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="338" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="356" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+            <rect x="374" y="198" width="4" height="112" fill="#bfad92" opacity="0.6"/>
+
+            <!-- Steps -->
+            <rect x="195" y="308" width="210" height="8"  fill="#b8a882"/>
+            <rect x="185" y="316" width="230" height="8"  fill="#b0a07a"/>
+
+            <!-- Portico pediment -->
+            <polygon points="220,195 300,155 380,195" fill="#c8b89a"/>
+            <!-- Portico shadow -->
+            <polygon points="220,195 300,163 380,195" fill="#b8a882" opacity="0.4"/>
+
+            <!-- Drum / neck -->
+            <rect x="270" y="110" width="60" height="80" fill="#d4c4a8"/>
+            <!-- Drum windows -->
+            <ellipse cx="300" cy="135" rx="8" ry="11" fill="#a8bfcc" opacity="0.8"/>
+
+            <!-- Dome -->
+            <ellipse cx="300" cy="108" rx="42" ry="12" fill="#b8c8d4"/>
+            <path d="M258 108 Q260 60 300 48 Q340 60 342 108 Z" fill="#c8d8e4"/>
+            <path d="M263 108 Q265 65 300 55 Q335 65 337 108 Z" fill="#d8e6ef"/>
+            <!-- Dome shadow band -->
+            <path d="M258 108 Q260 95 300 90 Q340 95 342 108" fill="none" stroke="#a8b8c4" stroke-width="2" opacity="0.5"/>
+
+            <!-- Lantern atop dome -->
+            <rect x="294" y="30" width="12" height="20" fill="#c8d4dc"/>
+            <rect x="291" y="27" width="18" height="6" fill="#b8c4cc"/>
+
+            <!-- Finial / flag pole -->
+            <rect x="299" y="5" width="2" height="26" fill="#8899aa"/>
+            <!-- Tiny flag -->
+            <rect x="301" y="5" width="14" height="9" fill="#F0B429"/>
+            <rect x="308" y="5" width="7" height="4" fill="#BE0000"/>
+
+            <!-- Left wing -->
+            <rect x="80"  y="218" width="120" height="92" fill="#c0b090"/>
+            <rect x="90"  y="222" width="100" height="88" fill="#cac0a0"/>
+
+            <!-- Right wing -->
+            <rect x="400" y="218" width="120" height="92" fill="#c0b090"/>
+            <rect x="410" y="222" width="100" height="88" fill="#cac0a0"/>
+
+            <!-- Windows on wings -->
+            <rect x="100" y="235" width="18" height="24" rx="2" fill="#a8bfcc" opacity="0.8"/>
+            <rect x="128" y="235" width="18" height="24" rx="2" fill="#a8bfcc" opacity="0.8"/>
+            <rect x="156" y="235" width="18" height="24" rx="2" fill="#a8bfcc" opacity="0.8"/>
+            <rect x="422" y="235" width="18" height="24" rx="2" fill="#a8bfcc" opacity="0.8"/>
+            <rect x="450" y="235" width="18" height="24" rx="2" fill="#a8bfcc" opacity="0.8"/>
+            <rect x="478" y="235" width="18" height="24" rx="2" fill="#a8bfcc" opacity="0.8"/>
+
+            <!-- Foreground trees -->
+            <rect x="50"  y="260" width="12" height="70" fill="#4a3520"/>
+            <ellipse cx="56"  cy="250" rx="32" ry="40" fill="#3a6e2e"/>
+            <rect x="520" y="265" width="12" height="65" fill="#4a3520"/>
+            <ellipse cx="526" cy="255" rx="28" ry="36" fill="#4a7c3f"/>
+
+            <!-- Bridge / waterfront -->
+            <rect x="0"   y="340" width="600" height="10" fill="#9aa8b4" opacity="0.6"/>
+            <!-- Bridge supports -->
+            <rect x="80"  y="330" width="8"  height="20" fill="#8899aa"/>
+            <rect x="160" y="330" width="8"  height="20" fill="#8899aa"/>
+            <rect x="240" y="330" width="8"  height="20" fill="#8899aa"/>
+            <rect x="320" y="330" width="8"  height="20" fill="#8899aa"/>
+            <rect x="400" y="330" width="8"  height="20" fill="#8899aa"/>
+            <rect x="480" y="330" width="8"  height="20" fill="#8899aa"/>
+
+            <!-- Water -->
+            <rect x="0" y="350" width="600" height="130" fill="url(#water)"/>
+            <!-- Water ripples -->
+            <path d="M0 365 Q75 360 150 368 Q225 376 300 368 Q375 360 450 368 Q525 376 600 368" fill="none" stroke="white" stroke-width="1.5" opacity="0.35"/>
+            <path d="M0 385 Q60 378 120 386 Q180 394 240 386 Q300 378 360 386 Q420 394 480 386 Q540 378 600 386" fill="none" stroke="white" stroke-width="1.5" opacity="0.25"/>
+            <path d="M0 405 Q100 398 200 406 Q300 414 400 406 Q500 398 600 406" fill="none" stroke="white" stroke-width="1" opacity="0.2"/>
+
+            <!-- Water reflection of dome -->
+            <path d="M275 356 Q280 380 300 390 Q320 380 325 356 Z" fill="white" opacity="0.12"/>
+          </svg>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GOAL CARDS -->
+  <section class="goals-section" aria-labelledby="goals-heading">
+    <h2 id="goals-heading">What can we help you do?</h2>
+    <p class="subhead">Choose a common goal or search above to get started.</p>
+
+    <div class="goals-grid">
+
+      <a href="/tags/5d1538807ccc6701ed6141d8" class="goal-card">
+        <div class="goal-icon icon-green" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+            <line x1="12" y1="12" x2="12" y2="16"/>
+            <line x1="10" y1="14" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <h3>Start or grow a business</h3>
+        <p>Register your business, get licenses, permits, and more.</p>
+        <div class="goal-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="/tags/5d1538807ccc6701ed6141d7" class="goal-card">
+        <div class="goal-icon icon-blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <h3>Get or renew a license</h3>
+        <p>Find professional, occupational, and business licenses.</p>
+        <div class="goal-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="/portal/get-a-permit.html" class="goal-card">
+        <div class="goal-icon icon-gold" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <h3>Get a permit</h3>
+        <p>Apply for permits for construction, events, and more.</p>
+        <div class="goal-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="/portal/housing-help.html" class="goal-card">
+        <div class="goal-icon icon-navy" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="5" width="20" height="14" rx="2"/>
+            <path d="M2 10h20"/>
+            <circle cx="12" cy="15" r="2"/>
+          </svg>
+        </div>
+        <h3>Find financial help</h3>
+        <p>Explore grants, tax credits, and financial assistance.</p>
+        <div class="goal-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+      <a href="/search?q=verify+license" class="goal-card">
+        <div class="goal-icon icon-orange" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <h3>Verify or look up</h3>
+        <p>Verify a license, check complaints, and more.</p>
+        <div class="goal-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- TRUST / HELP BANNER -->
+  <div class="info-banner" role="complementary">
+    <div class="info-banner-inner">
+
+      <div class="info-item">
+        <div class="info-item-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="info-item-body">
+          <strong>A secure and trusted portal</strong>
+          <p>Your information is protected and secure with enterprise-grade security.</p>
+        </div>
+      </div>
+
+      <div class="info-item help-item">
+        <div class="info-item-body" style="padding-left:0">
+          <strong>Need help?</strong>
+          <p>Get answers to common questions or contact customer support.</p>
+          <a href="/faqs" class="help-link">
+            Visit help center
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Decorative Maryland flag cross-botony -->
+    <svg class="banner-deco" width="200" height="200" viewBox="0 0 100 100" aria-hidden="true">
+      <rect width="50" height="50" fill="#F0B429"/>
+      <rect x="50" width="50" height="50" fill="#BE0000"/>
+      <rect y="50" width="50" height="50" fill="#BE0000"/>
+      <rect x="50" y="50" width="50" height="50" fill="#F0B429"/>
+      <rect x="12" y="12" width="26" height="26" fill="#BE0000"/>
+      <rect x="62" y="12" width="26" height="26" fill="#F0B429"/>
+      <rect x="12" y="62" width="26" height="26" fill="#F0B429"/>
+      <rect x="62" y="62" width="26" height="26" fill="#BE0000"/>
+    </svg>
+  </div>
+
+</main>
+
+<!-- ──────────────────── FOOTER ──────────────────── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="/" class="footer-logo" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="36" style="height:36px;width:auto;filter:brightness(0) invert(1);" />
+    </a>
+    <nav aria-label="Footer navigation">
+      <ul class="footer-links">
+        <li><a href="https://www.maryland.gov/pages/privacy_security.aspx" target="_blank" rel="noopener">Privacy</a></li>
+        <li><a href="https://www.maryland.gov/pages/accessibility.aspx" target="_blank" rel="noopener">Accessibility</a></li>
+        <li><a href="/faqs">FAQs</a></li>
+        <li><a href="/sign_up">Register</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="footer-copy">© 2026 Maryland OneStop — A service of the State of Maryland</p>
+</footer>
+
+</body>
+</html>

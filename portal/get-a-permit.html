@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get a Permit | Maryland OneStop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────────
+       Maryland Web Design System Tokens
+    ───────────────────────────────────────────── */
+    :root {
+      --md-navy:         #1b2a4a;
+      --md-navy-dark:    #0f1e36;
+      --md-blue:         #2378C3;
+      --md-blue-dark:    #1a5d9a;
+      --md-blue-light:   #d9e8f6;
+      --md-blue-lighter: #eff6fb;
+      --md-red:          #BE0000;
+      --md-gold:         #F0B429;
+      --md-gold-light:   #fef9e7;
+      --md-green:        #2e7d32;
+      --md-green-light:  #e8f5e9;
+      --md-teal:         #0071bc;
+      --md-teal-light:   #e0f0ff;
+      --md-purple:       #5c35a8;
+      --md-purple-light: #ede8f8;
+      --md-orange:       #c04a00;
+      --md-orange-light: #fdf0e8;
+
+      --gray-5:   #f8f8f8;
+      --gray-10:  #f0f0f0;
+      --gray-20:  #e6e6e6;
+      --gray-30:  #c9c9c9;
+      --gray-50:  #757575;
+      --gray-70:  #454545;
+      --gray-90:  #1b1b1b;
+      --white:    #ffffff;
+
+      --font-sans:  'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-serif: 'Merriweather', Georgia, serif;
+
+      --max-width: 1240px;
+      --nav-h: 68px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--gray-90);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--md-blue); text-decoration: underline; }
+    a:hover { color: var(--md-blue-dark); }
+
+    .skip-nav {
+      position: absolute; top: -100%; left: 1rem; z-index: 9999;
+      background: var(--md-navy); color: var(--white);
+      padding: 0.5rem 1rem; border-radius: 4px; font-weight: 600;
+      text-decoration: none;
+    }
+    .skip-nav:focus { top: 0.5rem; }
+
+    /* ─────────────────────────────────────────────
+       SHARED HEADER (same as landing page)
+    ───────────────────────────────────────────── */
+    .site-header {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-20);
+      position: sticky; top: 0; z-index: 200;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .site-logo {
+      display: flex; align-items: center; gap: 0.625rem;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .primary-nav { flex: 1; display: flex; align-items: center; }
+    .primary-nav ul { list-style: none; display: flex; align-items: center; gap: 0.25rem; }
+    .primary-nav a {
+      display: flex; align-items: center; gap: 0.3rem;
+      color: var(--gray-90); text-decoration: none;
+      font-size: 0.9375rem; font-weight: 600;
+      padding: 0.5rem 0.75rem; border-radius: 4px;
+      transition: background 0.15s; white-space: nowrap;
+    }
+    .primary-nav a:hover { background: var(--gray-10); color: var(--gray-90); }
+    .primary-nav .chevron { width: 14px; height: 14px; opacity: 0.6; }
+    .header-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 0.3rem;
+      color: var(--gray-70); background: none; border: none;
+      font: 0.9375rem/1 var(--font-sans); cursor: pointer;
+      padding: 0.5rem 0.625rem; border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .lang-btn:hover { background: var(--gray-10); }
+    .lang-btn svg { width: 18px; height: 18px; }
+    .sign-in-btn {
+      display: inline-flex; align-items: center;
+      padding: 0.5rem 1.25rem;
+      border: 2px solid var(--md-navy); border-radius: 4px;
+      color: var(--md-navy); background: transparent;
+      font: 600 0.9375rem/1 var(--font-sans);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s; white-space: nowrap;
+    }
+    .sign-in-btn:hover { background: var(--md-navy); color: var(--white); }
+
+    /* ─────────────────────────────────────────────
+       BREADCRUMB
+    ───────────────────────────────────────────── */
+    .breadcrumb {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-10);
+      padding: 0.75rem 1.5rem;
+    }
+    .breadcrumb-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .breadcrumb a {
+      color: var(--gray-70); text-decoration: none;
+      display: flex; align-items: center; gap: 0.375rem;
+    }
+    .breadcrumb a:hover { color: var(--md-blue); text-decoration: underline; }
+    .breadcrumb a svg { width: 16px; height: 16px; }
+    .breadcrumb-sep {
+      color: var(--gray-30);
+      display: flex; align-items: center;
+    }
+    .breadcrumb-sep svg { width: 14px; height: 14px; }
+    .breadcrumb-current { color: var(--gray-70); font-weight: 600; }
+
+    /* ─────────────────────────────────────────────
+       PAGE HERO
+    ───────────────────────────────────────────── */
+    .page-hero {
+      padding: 2.5rem 1.5rem 0;
+      background: var(--white);
+    }
+    .page-hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Left */
+    .hero-left { padding-bottom: 2.5rem; }
+    .page-title-row {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .page-icon {
+      width: 56px; height: 56px; flex-shrink: 0;
+      background: var(--md-gold-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #b7860b;
+    }
+    .page-icon svg { width: 28px; height: 28px; }
+    .page-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 900;
+      color: var(--gray-90);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .page-hero .subtext {
+      font-size: 1.0625rem;
+      color: var(--gray-70);
+      margin-bottom: 1.75rem;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    /* Search */
+    .search-wrap {
+      display: flex;
+      border: 2px solid var(--gray-30);
+      border-radius: 6px;
+      overflow: hidden;
+      max-width: 540px;
+      margin-bottom: 0.875rem;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .search-wrap:focus-within {
+      border-color: var(--md-blue);
+      box-shadow: 0 0 0 3px rgba(35,120,195,0.2);
+    }
+    .search-icon-wrap {
+      display: flex; align-items: center; padding: 0 0.875rem;
+      color: var(--gray-50); background: var(--white); border: none;
+    }
+    .search-icon-wrap svg { width: 20px; height: 20px; }
+    .search-input {
+      flex: 1; border: none; outline: none;
+      font: 1rem var(--font-sans); color: var(--gray-90);
+      padding: 0.875rem 0.5rem; background: var(--white);
+    }
+    .search-input::placeholder { color: var(--gray-50); }
+    .search-btn {
+      background: var(--md-navy); color: var(--white);
+      border: none; padding: 0 1.5rem;
+      font: 700 1rem var(--font-sans);
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .search-btn:hover { background: var(--md-navy-dark, #0f1e36); }
+
+    .try-line {
+      font-size: 0.875rem;
+      color: var(--gray-70);
+    }
+    .try-line a {
+      color: var(--md-blue); font-weight: 600;
+      text-decoration: none;
+    }
+    .try-line a:hover { text-decoration: underline; }
+
+    /* Right: photo + floating card */
+    .hero-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-photo {
+      width: 100%;
+      height: 300px;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      background: #c8d8e0;
+    }
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    /* House construction illustration placeholder */
+    .hero-photo-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, #d8e8d0 0%, #b8cc9c 50%, #98b078 100%);
+      display: flex; align-items: flex-end; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+
+    /* Common permits floating card */
+    .common-permits-card {
+      background: var(--white);
+      border: 1px solid var(--gray-20);
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      padding: 1.25rem 1.5rem 1rem;
+    }
+    .common-permits-card h2 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--gray-90);
+      margin-bottom: 0.75rem;
+    }
+    .permit-list {
+      list-style: none;
+      border-top: 1px solid var(--gray-10);
+    }
+    .permit-list li a {
+      display: flex; align-items: center; gap: 0.875rem;
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--gray-10);
+      text-decoration: none; color: var(--gray-90);
+      font-size: 0.9375rem; font-weight: 600;
+      transition: color 0.15s;
+    }
+    .permit-list li a:hover { color: var(--md-blue); }
+    .permit-list li a:hover .permit-chevron { color: var(--md-blue); }
+    .permit-list-icon {
+      width: 32px; height: 32px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-50);
+    }
+    .permit-list-icon svg { width: 18px; height: 18px; }
+    .permit-chevron {
+      margin-left: auto;
+      color: var(--gray-30);
+      display: flex; align-items: center;
+    }
+    .permit-chevron svg { width: 16px; height: 16px; }
+    .view-all-link {
+      display: inline-flex; align-items: center; gap: 0.375rem;
+      margin-top: 0.875rem;
+      font-size: 0.9375rem; font-weight: 700;
+      color: var(--md-blue); text-decoration: none;
+    }
+    .view-all-link:hover { text-decoration: underline; }
+    .view-all-link svg { width: 16px; height: 16px; }
+
+    /* ─────────────────────────────────────────────
+       BROWSE BY CATEGORY
+    ───────────────────────────────────────────── */
+    .browse-section {
+      padding: 3rem 1.5rem 2.5rem;
+      background: var(--white);
+    }
+    .browse-section h2 {
+      max-width: var(--max-width);
+      margin: 0 auto 1.25rem;
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--gray-90);
+    }
+    .category-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    .category-card {
+      display: flex; flex-direction: column;
+      padding: 1.5rem 1.25rem 1.25rem;
+      border: 1px solid var(--gray-20);
+      border-radius: 8px;
+      text-decoration: none; color: var(--gray-90);
+      background: var(--white);
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .category-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border-color: var(--gray-30);
+      transform: translateY(-2px); color: var(--gray-90);
+    }
+    .cat-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; flex-shrink: 0;
+    }
+    .cat-icon svg { width: 24px; height: 24px; }
+    .category-card h3 {
+      font-size: 1rem; font-weight: 700; line-height: 1.3;
+      margin-bottom: 0.5rem; color: var(--gray-90);
+    }
+    .category-card p {
+      font-size: 0.875rem; color: var(--gray-50);
+      line-height: 1.5; flex: 1;
+    }
+    .cat-arrow {
+      margin-top: 1.25rem; color: var(--md-blue);
+    }
+    .cat-arrow svg { width: 20px; height: 20px; }
+
+    .icon-blue-light   { background: var(--md-teal-light);   color: var(--md-teal); }
+    .icon-gold-light   { background: var(--md-gold-light);   color: #b7860b; }
+    .icon-green-light  { background: var(--md-green-light);  color: var(--md-green); }
+    .icon-purple-light { background: var(--md-purple-light); color: var(--md-purple); }
+    .icon-green2-light { background: #e8f5e9;                color: #2e7d32; }
+
+    /* ─────────────────────────────────────────────
+       BOTTOM INFO STRIP
+    ───────────────────────────────────────────── */
+    .info-strip {
+      background: var(--gray-5);
+      border-top: 1px solid var(--gray-20);
+      padding: 2.5rem 1.5rem;
+    }
+    .info-strip-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    /* Left: guidance */
+    .guidance-box {
+      display: flex; flex-direction: column;
+      background: var(--white);
+      border: 1px solid var(--gray-20);
+      border-radius: 8px;
+      padding: 1.75rem 1.5rem;
+      gap: 1rem;
+      height: 100%;
+    }
+    .guidance-box-top {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .guidance-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--md-purple-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--md-purple);
+    }
+    .guidance-icon svg { width: 22px; height: 22px; }
+    .guidance-text strong {
+      display: block; font-size: 1rem; font-weight: 700;
+      color: var(--gray-90); margin-bottom: 0.25rem;
+    }
+    .guidance-text p {
+      font-size: 0.875rem; color: var(--gray-70); line-height: 1.5;
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.625rem 1.25rem;
+      border: 2px solid var(--md-navy); border-radius: 4px;
+      color: var(--md-navy); background: transparent;
+      font: 600 0.9375rem var(--font-sans);
+      text-decoration: none; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      align-self: flex-start;
+    }
+    .btn-outline:hover { background: var(--md-navy); color: var(--white); }
+
+    /* Right: before you apply */
+    .before-apply h2 {
+      font-size: 1.0625rem; font-weight: 700;
+      color: var(--gray-90); margin-bottom: 1.25rem;
+    }
+    .before-items {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .before-item {
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .before-item-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--md-navy);
+    }
+    .before-item-icon svg { width: 24px; height: 24px; }
+    .before-item strong {
+      font-size: 0.9375rem; font-weight: 700; color: var(--gray-90);
+      display: block; line-height: 1.3;
+    }
+    .before-item p {
+      font-size: 0.8125rem; color: var(--gray-70); line-height: 1.5;
+    }
+
+    /* ─────────────────────────────────────────────
+       FOOTER (lighter variant)
+    ───────────────────────────────────────────── */
+    .site-footer {
+      background: var(--white);
+      border-top: 2px solid var(--gray-20);
+      padding: 1.5rem;
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .footer-logo {
+      display: flex; align-items: center;
+      text-decoration: none;
+    }
+    .footer-links {
+      display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--gray-70); text-decoration: none;
+      font-size: 0.875rem; transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--md-blue); text-decoration: underline; }
+    .footer-copy {
+      font-size: 0.8125rem; color: var(--gray-50);
+      white-space: nowrap;
+    }
+
+    /* ─────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .category-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 860px) {
+      .page-hero-inner { grid-template-columns: 1fr; }
+      .hero-photo { height: 220px; border-radius: 12px; }
+      .common-permits-card { border-radius: 12px; margin-top: 1rem; }
+      .primary-nav { display: none; }
+      .info-strip-inner { grid-template-columns: 1fr; }
+      .before-items { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+    @media (max-width: 400px) {
+      .category-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<a class="skip-nav" href="#main">Skip to main content</a>
+
+<!-- ──────────────────── HEADER ──────────────────── -->
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="/portal/onestop-md.html" class="site-logo" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="48" style="height:48px;width:auto;" />
+    </a>
+
+    <nav class="primary-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="#">Browse Services <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">For Business <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">For Residents <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="#">Help &amp; Resources <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a></li>
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <button class="lang-btn" aria-label="Select language: English">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        English
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <a href="/sign_in" class="sign-in-btn">Sign in</a>
+    </div>
+  </div>
+</header>
+
+<!-- ──────────────────── BREADCRUMB ──────────────────── -->
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/portal/onestop-md.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <span class="breadcrumb-sep" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+    </span>
+    <span class="breadcrumb-current" aria-current="page">Get a permit</span>
+  </div>
+</nav>
+
+<!-- ──────────────────── MAIN ──────────────────── -->
+<main id="main">
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" aria-labelledby="page-heading">
+    <div class="page-hero-inner">
+
+      <!-- Left: heading + search -->
+      <div class="hero-left">
+        <div class="page-title-row">
+          <div class="page-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <h1 id="page-heading">Get a permit</h1>
+        </div>
+
+        <p class="subtext">Apply for permits for construction, events, environmental activities, vehicles, and more.</p>
+
+        <form class="search-wrap" role="search" action="/search" method="get">
+          <span class="search-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </span>
+          <input class="search-input" type="search" name="q" placeholder="What type of permit do you need?" aria-label="Search for a permit type" />
+          <button class="search-btn" type="submit">Search</button>
+        </form>
+
+        <p class="try-line">
+          Try:
+          <a href="/search?q=build+a+deck">"Build a deck"</a>,
+          <a href="/search?q=home+addition">"Home addition"</a>,
+          <a href="/search?q=special+event">"Special event"</a>,
+          <a href="/search?q=tree+removal">"Tree removal"</a>
+        </p>
+      </div>
+
+      <!-- Right: photo + common permits card -->
+      <div class="hero-right">
+        <div class="hero-photo" aria-hidden="true">
+          <!-- House under construction illustration -->
+          <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
+            <defs>
+              <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#87ceeb"/>
+                <stop offset="60%" stop-color="#b0ddf0"/>
+                <stop offset="100%" stop-color="#c8e8d8"/>
+              </linearGradient>
+              <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7ab648"/>
+                <stop offset="100%" stop-color="#5a8a30"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Sky -->
+            <rect width="640" height="300" fill="url(#sky2)"/>
+
+            <!-- Clouds -->
+            <ellipse cx="100" cy="50" rx="55" ry="22" fill="white" opacity="0.8"/>
+            <ellipse cx="130" cy="42" rx="40" ry="18" fill="white" opacity="0.9"/>
+            <ellipse cx="70"  cy="55" rx="35" ry="16" fill="white" opacity="0.7"/>
+            <ellipse cx="480" cy="40" rx="50" ry="20" fill="white" opacity="0.75"/>
+            <ellipse cx="510" cy="33" rx="36" ry="16" fill="white" opacity="0.85"/>
+
+            <!-- Background trees -->
+            <rect x="20"  y="160" width="10" height="60" fill="#5a3a1a"/>
+            <ellipse cx="25" cy="148" rx="28" ry="35" fill="#4a8a30"/>
+            <rect x="580" y="165" width="10" height="55" fill="#5a3a1a"/>
+            <ellipse cx="585" cy="152" rx="26" ry="32" fill="#5a9a38"/>
+
+            <!-- Grass -->
+            <rect x="0" y="230" width="640" height="70" fill="url(#grass)"/>
+            <!-- Lawn texture -->
+            <rect x="0" y="230" width="640" height="4" fill="#6aaa38" opacity="0.5"/>
+
+            <!-- === HOUSE FRAME (under construction) === -->
+            <!-- Foundation -->
+            <rect x="160" y="222" width="320" height="12" fill="#8a8a8a"/>
+
+            <!-- Main walls (wood frame look) -->
+            <rect x="175" y="130" width="290" height="94" fill="#d4b896"/>
+            <!-- Wood grain lines on walls -->
+            <line x1="220" y1="130" x2="220" y2="224" stroke="#c4a882" stroke-width="1.5" opacity="0.5"/>
+            <line x1="265" y1="130" x2="265" y2="224" stroke="#c4a882" stroke-width="1.5" opacity="0.5"/>
+            <line x1="310" y1="130" x2="310" y2="224" stroke="#c4a882" stroke-width="1.5" opacity="0.5"/>
+            <line x1="355" y1="130" x2="355" y2="224" stroke="#c4a882" stroke-width="1.5" opacity="0.5"/>
+            <line x1="400" y1="130" x2="400" y2="224" stroke="#c4a882" stroke-width="1.5" opacity="0.5"/>
+            <line x1="445" y1="130" x2="445" y2="224" stroke="#c4a882" stroke-width="1.5" opacity="0.5"/>
+
+            <!-- Siding (lower installed) -->
+            <rect x="175" y="170" width="290" height="54" fill="#b8ccd8"/>
+            <rect x="175" y="185" width="290" height="2" fill="#a8bcc8" opacity="0.6"/>
+            <rect x="175" y="200" width="290" height="2" fill="#a8bcc8" opacity="0.6"/>
+            <rect x="175" y="215" width="290" height="2" fill="#a8bcc8" opacity="0.6"/>
+
+            <!-- Windows -->
+            <rect x="195" y="148" width="55" height="45" rx="2" fill="#a8d0e8" opacity="0.9"/>
+            <rect x="195" y="148" width="55" height="45" rx="2" fill="none" stroke="#8ab8d4" stroke-width="2"/>
+            <line x1="222" y1="148" x2="222" y2="193" stroke="#8ab8d4" stroke-width="1.5"/>
+            <line x1="195" y1="170" x2="250" y2="170" stroke="#8ab8d4" stroke-width="1.5"/>
+
+            <rect x="390" y="148" width="55" height="45" rx="2" fill="#a8d0e8" opacity="0.9"/>
+            <rect x="390" y="148" width="55" height="45" rx="2" fill="none" stroke="#8ab8d4" stroke-width="2"/>
+            <line x1="417" y1="148" x2="417" y2="193" stroke="#8ab8d4" stroke-width="1.5"/>
+            <line x1="390" y1="170" x2="445" y2="170" stroke="#8ab8d4" stroke-width="1.5"/>
+
+            <!-- Door (installed) -->
+            <rect x="290" y="168" width="60" height="56" rx="2" fill="#8a6a40"/>
+            <circle cx="342" cy="196" r="4" fill="#c8a020"/>
+            <rect x="290" y="168" width="60" height="56" rx="2" fill="none" stroke="#6a4a20" stroke-width="1.5"/>
+
+            <!-- Roof frame (exposed rafters / dormer) -->
+            <!-- Main roof -->
+            <polygon points="155,132 320,55 485,132" fill="#c8a060"/>
+            <polygon points="155,132 320,55 485,132" fill="none" stroke="#b89050" stroke-width="2"/>
+            <!-- Shingle lines -->
+            <line x1="168" y1="125" x2="472" y2="125" stroke="#a88040" stroke-width="1.5" opacity="0.6"/>
+            <line x1="185" y1="115" x2="455" y2="115" stroke="#a88040" stroke-width="1.5" opacity="0.6"/>
+            <line x1="208" y1="103" x2="432" y2="103" stroke="#a88040" stroke-width="1.5" opacity="0.6"/>
+            <line x1="235" y1="90"  x2="405" y2="90"  stroke="#a88040" stroke-width="1.5" opacity="0.6"/>
+            <line x1="268" y1="76"  x2="372" y2="76"  stroke="#a88040" stroke-width="1.5" opacity="0.6"/>
+
+            <!-- Dormer window -->
+            <rect x="285" y="82" width="70" height="46" fill="#c8a060"/>
+            <polygon points="275,84 320,62 365,84" fill="#b89050"/>
+            <rect x="296" y="88" width="48" height="32" rx="2" fill="#a8d0e8" opacity="0.9"/>
+            <rect x="296" y="88" width="48" height="32" rx="2" fill="none" stroke="#8ab8d4" stroke-width="1.5"/>
+            <line x1="320" y1="88" x2="320" y2="120" stroke="#8ab8d4" stroke-width="1.5"/>
+
+            <!-- Construction scaffolding (left) -->
+            <rect x="130" y="80" width="5"  height="150" fill="#9a8060"/>
+            <rect x="160" y="80" width="5"  height="150" fill="#9a8060"/>
+            <rect x="128" y="100" width="39" height="4"  fill="#8a7050"/>
+            <rect x="128" y="130" width="39" height="4"  fill="#8a7050"/>
+            <rect x="128" y="160" width="39" height="4"  fill="#8a7050"/>
+            <rect x="128" y="190" width="39" height="4"  fill="#8a7050"/>
+            <!-- diagonal brace -->
+            <line x1="130" y1="100" x2="165" y2="130" stroke="#8a7050" stroke-width="2.5" opacity="0.6"/>
+            <line x1="165" y1="100" x2="130" y2="130" stroke="#8a7050" stroke-width="2.5" opacity="0.6"/>
+
+            <!-- Lumber pile on ground -->
+            <rect x="490" y="210" width="80" height="8"  rx="2" fill="#c4a060"/>
+            <rect x="494" y="204" width="76" height="8"  rx="2" fill="#d4b070"/>
+            <rect x="498" y="198" width="72" height="8"  rx="2" fill="#c4a060"/>
+
+            <!-- Hard hat on ground -->
+            <ellipse cx="550" cy="232" rx="18" ry="8" fill="#F0B429"/>
+            <rect    x="535" y="224" width="30" height="8" rx="4" fill="#F0B429"/>
+
+            <!-- Foreground grass detail -->
+            <rect x="0" y="240" width="640" height="60" fill="#5a9030" opacity="0.3"/>
+          </svg>
+        </div>
+
+        <div class="common-permits-card">
+          <h2>Common permits</h2>
+          <ul class="permit-list" role="list">
+            <li>
+              <a href="permit-application.html">
+                <span class="permit-list-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </span>
+                Building permit
+                <span class="permit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a href="permit-application.html">
+                <span class="permit-list-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m13 2-2 2.5h3L12 7"/><path d="M10 14v-3"/><path d="M14 14v-3"/><path d="M11 19H6.5a3.5 3.5 0 0 1 0-7H17a3 3 0 0 0 0-6h-2"/></svg>
+                </span>
+                Electrical permit
+                <span class="permit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a href="permit-application.html">
+                <span class="permit-list-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+                </span>
+                Plumbing permit
+                <span class="permit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a href="permit-application.html">
+                <span class="permit-list-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </span>
+                HVAC permit
+                <span class="permit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a href="permit-application.html">
+                <span class="permit-list-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </span>
+                Special event permit
+                <span class="permit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></span>
+              </a>
+            </li>
+          </ul>
+          <a href="#all-permits" class="view-all-link">
+            View all permit types
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BROWSE BY CATEGORY -->
+  <section class="browse-section" aria-labelledby="browse-heading">
+    <h2 id="browse-heading">Browse by category</h2>
+    <div class="category-grid">
+
+      <a href="permit-application.html" class="category-card">
+        <div class="cat-icon icon-blue-light" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <h3>Construction and building</h3>
+        <p>New construction, additions, renovations, decks, and more.</p>
+        <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="permit-application.html" class="category-card">
+        <div class="cat-icon icon-gold-light" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m13 2-2 2.5h3L12 7"/><path d="M10 14v-3"/><path d="M14 14v-3"/>
+            <path d="M11 19H6.5a3.5 3.5 0 0 1 0-7H17a3 3 0 0 0 0-6h-2"/>
+          </svg>
+        </div>
+        <h3>Electrical, mechanical and plumbing</h3>
+        <p>Electrical, plumbing, HVAC, and mechanical work.</p>
+        <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="permit-application.html" class="category-card">
+        <div class="cat-icon icon-green-light" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 8C8 10 5.9 16.17 3.82 19.5a3 3 0 0 0 2.94 4.5"/>
+            <path d="M9.5 14.5 3 20.5"/>
+            <path d="M14.5 3.5c0 6-2.5 10-6 12"/>
+          </svg>
+        </div>
+        <h3>Property and land</h3>
+        <p>Land use, grading, fencing, tree removal, and signs.</p>
+        <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="permit-application.html" class="category-card">
+        <div class="cat-icon icon-purple-light" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Events and public gatherings</h3>
+        <p>Festivals, parades, block parties, and special events.</p>
+        <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+      <a href="permit-application.html" class="category-card">
+        <div class="cat-icon icon-green2-light" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+            <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+          </svg>
+        </div>
+        <h3>Environmental and natural resources</h3>
+        <p>Water, air, wetlands, and other environmental permits.</p>
+        <div class="cat-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- BOTTOM INFO STRIP -->
+  <div class="info-strip">
+    <div class="info-strip-inner">
+
+      <!-- Not sure widget -->
+      <div class="guidance-box">
+        <div class="guidance-box-top">
+          <div class="guidance-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div class="guidance-text">
+            <strong>Not sure which permit you need?</strong>
+            <p>Answer a few questions and we'll help guide you.</p>
+          </div>
+        </div>
+        <a href="permit-application.html" class="btn-outline">Find the right permit</a>
+      </div>
+
+      <!-- Before you apply -->
+      <div class="before-apply">
+        <h2>Before you apply</h2>
+        <div class="before-items">
+          <div class="before-item">
+            <div class="before-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 11l3 3L22 4"/>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+              </svg>
+            </div>
+            <strong>Check requirements</strong>
+            <p>Review what's needed for your permit.</p>
+          </div>
+          <div class="before-item">
+            <div class="before-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <strong>Check processing times</strong>
+            <p>See how long it typically takes to get approved.</p>
+          </div>
+          <div class="before-item">
+            <div class="before-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+            </div>
+            <strong>Fees and payments</strong>
+            <p>Learn about fees and accepted payment methods.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<!-- ──────────────────── FOOTER ──────────────────── -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <a href="/portal/onestop-md.html" class="footer-logo" aria-label="Maryland OneStop home">
+      <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="44" style="height:44px;width:auto;" />
+    </a>
+    <nav aria-label="Footer navigation">
+      <ul class="footer-links">
+        <li><a href="https://www.maryland.gov/pages/privacy_security.aspx" target="_blank" rel="noopener">Privacy</a></li>
+        <li><a href="https://www.maryland.gov/pages/accessibility.aspx" target="_blank" rel="noopener">Accessibility</a></li>
+        <li><a href="/terms">Terms of Use</a></li>
+        <li><a href="/sitemap">Site Map</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </nav>
+    <span class="footer-copy">© 2024 State of Maryland</span>
+  </div>
+</footer>
+
+</body>
+</html>
