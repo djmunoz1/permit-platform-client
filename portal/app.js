@@ -33,7 +33,7 @@ const Auth = {
   },
   logout() {
     localStorage.removeItem(KEYS.session);
-    window.location.href = '/portal/login.html';
+    window.location.href = '/permit-platform-client/portal/login.html';
   },
   current() {
     try { return JSON.parse(localStorage.getItem(KEYS.session)); }
@@ -41,8 +41,8 @@ const Auth = {
   },
   requireRole(role) {
     const s = Auth.current();
-    if (!s) { window.location.href = '/portal/login.html'; return null; }
-    if (role && s.role !== role) { window.location.href = s.role === 'admin' ? '/portal/admin-dashboard.html' : '/portal/my-applications.html'; return null; }
+    if (!s) { window.location.href = '/permit-platform-client/portal/login.html'; return null; }
+    if (role && s.role !== role) { window.location.href = s.role === 'admin' ? '/permit-platform-client/portal/admin-dashboard.html' : '/permit-platform-client/portal/my-applications.html'; return null; }
     return s;
   },
 };

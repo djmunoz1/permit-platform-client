@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
-  <script src="/portal/app.js"></script>
+  <script src="/permit-platform-client/portal/app.js"></script>
   <style>
     :root {
       --md-navy: #1b2a4a; --md-navy-dark: #0f1e36;
@@ -134,7 +134,7 @@
 <body>
 
 <header class="site-header">
-  <a href="/portal/onestop-md.html" class="site-logo">
+  <a href="/permit-platform-client/portal/onestop-md.html" class="site-logo">
     <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="44" style="height:44px;width:auto;" />
   </a>
   <div class="header-user" id="header-user"></div>
@@ -151,7 +151,7 @@
         <h1>My Applications</h1>
         <p>Track the status of your submitted applications.</p>
       </div>
-      <a href="/portal/onestop-md.html" class="btn btn-primary">
+      <a href="/permit-platform-client/portal/onestop-md.html" class="btn btn-primary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Start new application
       </a>
@@ -166,7 +166,7 @@
   </div>
 </main>
 
-<footer class="site-footer">© 2024 State of Maryland &nbsp;·&nbsp; <a href="/portal/onestop-md.html">Home</a></footer>
+<footer class="site-footer">© 2024 State of Maryland &nbsp;·&nbsp; <a href="/permit-platform-client/portal/onestop-md.html">Home</a></footer>
 
 <script>
 const session = Auth.requireRole('resident');
@@ -216,7 +216,7 @@ function render() {
         <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
         <h2>No applications yet</h2>
         <p>You haven't submitted any applications. Start your first one below.</p>
-        <a href="/portal/onestop-md.html" class="btn btn-primary">Start an application</a>
+        <a href="/permit-platform-client/portal/onestop-md.html" class="btn btn-primary">Start an application</a>
       </div>`;
     return;
   }

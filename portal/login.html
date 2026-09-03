@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet" />
-  <script src="/portal/app.js"></script>
+  <script src="/permit-platform-client/portal/app.js"></script>
   <style>
     :root {
       --md-navy: #1b2a4a; --md-navy-dark: #0f1e36;
@@ -80,7 +80,7 @@
 <body>
 
 <header class="site-header">
-  <a href="/portal/onestop-md.html" class="site-logo">
+  <a href="/permit-platform-client/portal/onestop-md.html" class="site-logo">
     <img src="https://onestop.md.gov/assets/logo-md-one-stop-c919bf4ebc88cc85229fdd23a95b205b7acadb1a3722f46d5153cae3da587020.svg" alt="Maryland OneStop" height="44" style="height:44px;width:auto;" />
   </a>
 </header>
@@ -126,7 +126,7 @@
 <script>
   // Redirect already-logged-in users
   const s = Auth.current();
-  if (s) window.location.href = s.role === 'admin' ? '/portal/admin-dashboard.html' : '/portal/my-applications.html';
+  if (s) window.location.href = s.role === 'admin' ? '/permit-platform-client/portal/admin-dashboard.html' : '/permit-platform-client/portal/my-applications.html';
 
   document.getElementById('login-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -138,7 +138,7 @@
       return;
     }
     const next = new URLSearchParams(location.search).get('next') || '';
-    window.location.href = session.role === 'admin' ? '/portal/admin-dashboard.html' : (next || '/portal/my-applications.html');
+    window.location.href = session.role === 'admin' ? '/permit-platform-client/portal/admin-dashboard.html' : (next || '/permit-platform-client/portal/my-applications.html');
   });
 
   function fillDemo(email, password) {
